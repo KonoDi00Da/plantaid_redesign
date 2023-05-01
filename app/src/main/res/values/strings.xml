@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">plantaid_redesign</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to_nplantaid">Welcome to \nPlantAid</string>
+    <string name="the_aid_for_your_gardening_njourney">the aid for your gardening\njourney</string>
+    <string name="get_started">Get Started</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="trouble_signing_in">Trouble signing in?</string>
+    <string name="title_activity_home">Home</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="what_s_going_on_today">What\'s going on today?</string>
+    <string name="hi_renette">Hi, Renette!</string>
+    <string name="overcast_clouds">Overcast Clouds</string>
+    <string name="account">Account</string>
+    <string name="about_us">About Us</string>
+    <string name="settings">Settings</string>
+    <string name="good_morning">Good Morning</string>
+    <string name="my_garden">My Garden</string>
+    <string name="weather_in_bauan_ph">Weather in Bauan, PH</string>
+</resources>

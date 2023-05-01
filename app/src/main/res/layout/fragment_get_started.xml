@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_green"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LoginRegister.GetStartedFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/merriweather_bold"
+            android:textColor="@color/dark_green"
+            android:textSize="30sp"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/welcome_to_nplantaid" />
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_green"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/the_aid_for_your_gardening_njourney" />
+        <RelativeLayout
+            android:id="@+id/imageFlower"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+            <TextView
+                android:id="@+id/txtFill2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="blbelbe"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/flowerbg"
+                android:layout_centerHorizontal="true"
+                android:layout_width="300dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_height="360dp"
+                app:tint="@color/dark_green"
+                android:elevation="10dp"
+                android:layout_below="@id/txtFill2"
+                android:background="@drawable/flower_bg"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:layout_below="@id/txtFill2"
+                android:layout_alignStart="@id/flowerbg"
+                android:layout_alignEnd="@id/flowerbg"
+                android:layout_alignBottom="@id/flowerbg"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="10dp"
+                android:src="@drawable/flowerulit" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGetStarted"
+            android:background="@drawable/btn_rounded"
+            app:backgroundTint="@color/bluish_black"
+            app:rippleColor="@color/lighter_black"
+            android:textColor="@color/fake_white"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/merriweather_bold"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="@string/get_started" />
+
+
+    </LinearLayout>
+</ScrollView>

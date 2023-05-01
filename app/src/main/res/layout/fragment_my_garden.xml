@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fake_white"
+    tools:context=".Today.MyGardenFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/leaves_bg"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"/>
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/btnNavDrawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/ic_tab" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/transparent_bg"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative2"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_garden"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/merriweather_bold"
+            android:textColor="@color/dark_green"
+            android:textSize="30sp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            android:layout_width="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_baseline_add_24"
+            app:tint="@color/fake_white"
+            android:background="@color/nice_green"
+            android:layout_alignTop="@id/txtWelcome"
+            android:layout_toEndOf="@id/txtWelcome"/>
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_below="@id/relative2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/light_green">
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="There's no plants here yet :)"
+            android:textColor="@color/frog_green"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relative2"/>
+
+
+</RelativeLayout>

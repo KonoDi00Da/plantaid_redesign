@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuAccount"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:iconTint="@color/nice_green"
+        android:title="@string/account" />
+    <item
+        android:id="@+id/menuSettings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:iconTint="@color/nice_green"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/menuAboutUs"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:iconTint="@color/nice_green"
+        android:title="@string/about_us" />
+
+</menu>
