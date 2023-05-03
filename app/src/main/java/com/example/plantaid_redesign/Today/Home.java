@@ -61,6 +61,12 @@ public class Home extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
 
         try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.parseColor("#485E0D"));
+            }
+
             setBottomNav();
 
             //data passed from the child fragment (Opening navdrawer)
@@ -176,6 +182,14 @@ public class Home extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.body_container, fragment, null)
                 .commit();
+    }
+
+    public void updateStatusBarColor(String color){// Color must be in hexadecimal format
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor(color));
+        }
     }
 
 }

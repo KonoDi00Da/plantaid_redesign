@@ -23,4 +23,5 @@
     <string name="good_morning">Good Morning</string>
     <string name="my_garden">My Garden</string>
     <string name="weather_in_bauan_ph">Weather in Bauan, PH</string>
+    <string name="temp">24°C</string>
 </resources>

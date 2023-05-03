@@ -44,4 +44,11 @@
         app:menu="@menu/navigation_menu"
         android:fitsSystemWindows="true" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/full_body_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
