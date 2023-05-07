@@ -84,70 +84,82 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/weatherForecastCard"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="150dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/bluish_black"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:backgroundTint="@color/bluish_black">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/imgTimeBg"
-                    android:src="@color/bluish_black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:src="@color/bluish_black" />
 
                 <RelativeLayout
+                    android:visibility="invisible"
+                    android:id="@+id/weatherForecastView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/txtLocation"
                         android:layout_width="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_below="@id/txtTemperature"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/fake_white"
-                        android:text="@string/weather_in_bauan_ph"/>
+                        android:layout_below="@id/txtTemperature"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/weather_in_bauan_ph"
+                        android:textColor="@color/fake_white" />
+
+                    <TextView
+                        android:id="@+id/txtDateTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtLocation"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="adsfasdfasdf"
+                        android:textColor="@color/fake_white" />
 
                     <TextView
                         android:id="@+id/txtCondition"
                         android:layout_width="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_below="@id/txtTemperature"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/fake_white"
-                        android:text="Cloudy"/>
+                        android:layout_below="@id/txtLocation"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Cloudy"
+                        android:textColor="@color/fake_white" />
 
 
                     <TextView
                         android:id="@+id/txtTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
+                        android:text="@string/temp"
                         android:textColor="@color/fake_white"
-                        android:textSize="50sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temp"/>
+                        android:textSize="50sp" />
 
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="hey"
-                app:layout_constraintTop_toBottomOf="@id/weatherForecastCard"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/weatherForecastCard" />
 
             <ImageView
                 android:id="@+id/currentWeatherIcon"
@@ -159,7 +171,20 @@
                 app:layout_constraintEnd_toEndOf="@id/weatherForecastCard"
                 android:elevation="6dp" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:indeterminate="true"
+                android:elevation="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/weatherForecastCard" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/txt6"

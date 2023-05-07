@@ -24,18 +24,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.plantaid_redesign.Common.Common;
+import com.example.plantaid_redesign.Model.WeatherResult;
 import com.example.plantaid_redesign.R;
+import com.example.plantaid_redesign.Retrofit.IOpenWeatherMap;
+import com.example.plantaid_redesign.Retrofit.RetrofitClient;
 import com.example.plantaid_redesign.WeatherForecastFragment;
+import com.squareup.picasso.Picasso;
 
 import java.time.LocalTime;
 import java.util.Calendar;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+
 public class TodayFragment extends Fragment {
     private static final String TAG = "home";
-    private ImageView btnNavDrawer, imgTimeBg;
+    private ImageView btnNavDrawer, imgTimeBg, currentWeatherIcon;
     private CardView weatherForecastCard;
+    private TextView txtTemperature, txtLocation, txtCondition, txtDateTime;
+    private RelativeLayout weatherForecastView;
+    private String txtSunrise, txtSunset, txtGeoCoords;
+
+    private ProgressBar loading;
+
+    private CompositeDisposable compositeDisposable;
+    private IOpenWeatherMap mService;
+
+    public TodayFragment(){
+        compositeDisposable = new CompositeDisposable();
+        Retrofit retrofit = RetrofitClient.getInstance();
+        mService = retrofit.create(IOpenWeatherMap.class);
+    }
 
 
     @Override
@@ -52,17 +80,66 @@ public class TodayFragment extends Fragment {
         btnNavDrawer = view.findViewById(R.id.btnNavDrawer);
         weatherForecastCard = view.findViewById(R.id.weatherForecastCard);
         imgTimeBg = view.findViewById(R.id.imgTimeBg);
+        currentWeatherIcon = view.findViewById(R.id.currentWeatherIcon);
+        txtTemperature = view.findViewById(R.id.txtTemperature);
+        txtLocation = view.findViewById(R.id.txtLocation);
+        txtCondition = view.findViewById(R.id.txtCondition);
+        txtDateTime = view.findViewById(R.id.txtDateTime);
+        loading = view.findViewById(R.id.progressBar);
+        weatherForecastView = view.findViewById(R.id.weatherForecastView);
 
         try{
             openDrawer();
             openWeatherForecastFragment();
             setBackgroundImage();
+            getWeatherInformation();
 
         }catch (Exception e){
             Log.e(TAG, "tab", e);
         }
 
     }
+
+    private void getWeatherInformation() {
+        compositeDisposable.add(mService.getWeatherByLatLng(String.valueOf(Common.current_location.getLatitude()),
+                String.valueOf(Common.current_location.getLongitude()),
+                Common.APP_ID,
+                "metric")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<WeatherResult>() {
+                    @Override
+                    public void accept(WeatherResult weatherResult) throws Exception {
+                        //Load image
+                        Picasso.get().load(new StringBuilder("https://openweathermap.org/img/w/")
+                                .append(weatherResult.getWeather().get(0).getIcon())
+                                .append(".png").toString()).into(currentWeatherIcon);
+
+                        txtLocation.setText(new StringBuilder("Weather in ")
+                                .append(weatherResult.getName()).toString());
+                        txtTemperature.setText(new StringBuilder(
+                                String.valueOf((int)weatherResult.getMain().getTemp())).append("°C").toString());
+                        txtDateTime.setText(Common.convertUnixToDate(weatherResult.getDt()));
+                        txtSunrise = Common.convertUnixToHour(weatherResult.getSys().getSunrise());
+                        txtSunset = Common.convertUnixToHour(weatherResult.getSys().getSunset());
+                        txtGeoCoords = new StringBuilder("[").append(weatherResult.getCoord().toString()).append("]").toString();
+                        txtCondition.setText(weatherResult.getWeather().get(0).getDescription().toString());
+
+                        //Log.d("weather",weatherResult.getName());
+                        weatherForecastView.setVisibility(View.VISIBLE);
+                        loading.setVisibility(View.GONE);
+
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Toast.makeText(getActivity(), ""+throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }));
+    }
+
+
     public void openDrawer(){
         btnNavDrawer.setOnClickListener(new View.OnClickListener() {
             @Override

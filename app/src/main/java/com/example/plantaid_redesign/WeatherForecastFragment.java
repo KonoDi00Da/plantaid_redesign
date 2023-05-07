@@ -65,12 +65,17 @@ public class WeatherForecastFragment extends Fragment {
 
         if (hour >= 6 && hour < 12) {
             time_bg.setImageResource(R.drawable.day_bg);
+            ((Home) getActivity()).updateStatusBarColor("#f9c761");
         } else if (hour >= 12 && hour < 17) {
             time_bg.setImageResource(R.drawable.day_bg);
+            ((Home) getActivity()).updateStatusBarColor("#f9c761");
         } else if (hour >= 17 && hour < 20) {
             time_bg.setImageResource(R.drawable.day_bg);
+            ((Home) getActivity()).updateStatusBarColor("#f9c761");
         } else {
             time_bg.setImageResource(R.drawable.night_bg);
+            ((Home) getActivity()).updateStatusBarColor("#444eae");
+
         }
 
     }
