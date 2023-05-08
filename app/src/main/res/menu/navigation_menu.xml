@@ -17,4 +17,10 @@
         android:iconTint="@color/nice_green"
         android:title="@string/about_us" />
 
+    <item
+        android:id="@+id/menuLogout"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:iconTint="@color/nice_green"
+        android:title="@string/logout" />
+
 </menu>

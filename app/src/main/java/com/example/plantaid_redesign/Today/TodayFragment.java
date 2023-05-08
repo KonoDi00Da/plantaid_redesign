@@ -100,8 +100,15 @@ public class TodayFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
     private void getWeatherInformation() {
-        compositeDisposable.add(mService.getWeatherByLatLng(String.valueOf(Common.current_location.getLatitude()),
+        compositeDisposable.add(mService.getWeatherByLatLng(
+                String.valueOf(Common.current_location.getLatitude()),
                 String.valueOf(Common.current_location.getLongitude()),
                 Common.APP_ID,
                 "metric")
@@ -123,7 +130,7 @@ public class TodayFragment extends Fragment {
                         txtSunrise = Common.convertUnixToHour(weatherResult.getSys().getSunrise());
                         txtSunset = Common.convertUnixToHour(weatherResult.getSys().getSunset());
                         txtGeoCoords = new StringBuilder("[").append(weatherResult.getCoord().toString()).append("]").toString();
-                        txtCondition.setText(weatherResult.getWeather().get(0).getDescription().toString());
+                        txtCondition.setText(weatherResult.getWeather().get(0).getDescription());
 
                         //Log.d("weather",weatherResult.getName());
                         weatherForecastView.setVisibility(View.VISIBLE);
@@ -175,7 +182,7 @@ public class TodayFragment extends Fragment {
         } else if (hour >= 12 && hour < 17) {
             imgTimeBg.setImageResource(R.drawable.day_bg);
         } else if (hour >= 17 && hour < 20) {
-            imgTimeBg.setImageResource(R.drawable.day_bg);
+            imgTimeBg.setImageResource(R.drawable.night_bg);
         } else {
             imgTimeBg.setImageResource(R.drawable.night_bg);
         }

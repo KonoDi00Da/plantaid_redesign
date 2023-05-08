@@ -22,4 +22,11 @@ public class Common {
         String formatted = sdf.format(date);
         return formatted;
     }
+
+    public static String convertUnixToDay(long dt) {
+        Date date = new Date(dt*1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a\nEEEE");
+        String formatted = sdf.format(date);
+        return formatted;
+    }
 }

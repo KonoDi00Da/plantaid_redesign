@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "445394147173",
+    "firebase_url": "https://plantaid-mobile-app-default-rtdb.firebaseio.com",
+    "project_id": "plantaid-mobile-app",
+    "storage_bucket": "plantaid-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445394147173:android:c110f0f2178abf6f90738c",
+        "android_client_info": {
+          "package_name": "com.example.plantaid_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445394147173-e0v5tbt0g2u9sjr9am0ta8ed04qee435.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-ZxP2KXzHd71Looo5zRY-r7KCYJkzrm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445394147173-e0v5tbt0g2u9sjr9am0ta8ed04qee435.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445394147173:android:209e02f8e9d9afad90738c",
+        "android_client_info": {
+          "package_name": "com.example.plantaid_redesign"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445394147173-e0v5tbt0g2u9sjr9am0ta8ed04qee435.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-ZxP2KXzHd71Looo5zRY-r7KCYJkzrm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445394147173-e0v5tbt0g2u9sjr9am0ta8ed04qee435.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

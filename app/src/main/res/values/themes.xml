@@ -22,6 +22,11 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="roundedCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
+
     <style name="Theme.PlantAid_Upgrade.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PlantAid_Upgrade.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

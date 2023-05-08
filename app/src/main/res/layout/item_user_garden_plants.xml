@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_marginStart="30dp"
+    app:cardElevation="0dp"
+    android:backgroundTint="@android:color/transparent"
+    android:layout_marginTop="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/plants_bg_card" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgPlant"
+            app:shapeAppearanceOverlay="@style/roundedCorner"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/plant_sample_img"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/txtComPlantName"
+            android:layout_toEndOf="@id/imgPlant"
+            android:layout_alignTop="@+id/imgPlant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/dark_green"
+            android:fontFamily="@font/merriweather_bold"
+            android:text="Ponkan" />
+
+        <TextView
+            android:id="@+id/txtSciPlantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgPlant"
+            android:layout_below="@id/txtComPlantName"
+            android:textColor="@color/dark_green"
+            android:textStyle="italic"
+            android:text="Citrus reticulata"  />
+
+        <HorizontalScrollView
+            android:scrollbars="none"
+            android:layout_below="@id/txtSciPlantName"
+            android:layout_toEndOf="@id/imgPlant"
+            android:layout_marginTop="16dp"
+            android:layout_alignBottom="@id/imgPlant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_Water"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="50dp"
+                    android:backgroundTint="@color/nice_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/water"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/fake_white"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_Harvest"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="50dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/nice_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Harvest"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/fake_white"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_Fertilize"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/nice_green"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Fertilize"
+                        android:textColor="@color/fake_white" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_Repot"
+                    android:layout_marginStart="10dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="50dp"
+                    android:backgroundTint="@color/nice_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Repot"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/fake_white"/>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="invisible"
+            android:layout_below="@id/txtSciPlantName"
+            android:layout_toEndOf="@id/imgPlant"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_alignBottom="@id/imgPlant"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginStart="30dp"
+    app:cardElevation="0dp"
+    android:backgroundTint="@android:color/transparent"
+    android:layout_marginTop="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/plants_bg_card" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgPlant"
+            app:shapeAppearanceOverlay="@style/roundedCorner"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/plant_sample_img"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/txtComPlantName"
+            android:layout_toEndOf="@id/imgPlant"
+            android:layout_alignTop="@+id/imgPlant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/dark_green"
+            android:fontFamily="@font/merriweather_bold"
+            android:text="Ponkan" />
+
+        <TextView
+            android:id="@+id/txtSciPlantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgPlant"
+            android:layout_below="@id/txtComPlantName"
+            android:textColor="@color/dark_green"
+            android:textStyle="italic"
+            android:text="Citrus reticulata"  />
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

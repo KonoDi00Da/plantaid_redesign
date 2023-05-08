@@ -26,4 +26,6 @@
     <string name="temp">24°C</string>
     <string name="identify">Identify</string>
     <string name="snap_any_photo_of_a_plant_to_identify_its_species">Snap any photo of a plant to\n identify its species</string>
+    <string name="water">Water</string>
+    <string name="logout">Logout</string>
 </resources>

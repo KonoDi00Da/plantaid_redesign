@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:layout_width="120dp"
+    android:layout_marginStart="10dp"
+    android:paddingEnd="20dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp"
+    android:backgroundTint="@color/fake_white">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_day_of_week"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wednesday"
+            android:textSize="13sp"
+            android:textColor="@color/bluish_black"/>
+
+        <ImageView
+            android:id="@+id/imgWeatherIcon"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/heavy_rain" />
+
+        <TextView
+            android:id="@+id/txtTemperature"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/temp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/bluish_black"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="partly cloudy"
+            android:textSize="13sp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/bluish_black" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
