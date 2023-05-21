@@ -13,13 +13,20 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.Plantaid_redesign.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="roundedImageViewRounded">
+
+    <style name="roundedImageViewRounded" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="roundedBottom">
+        <item name="cornerSizeBottomRight">20%</item>
+        <item name="cornerSizeBottomLeft">20%</item>
     </style>
 
     <style name="roundedCorner">
@@ -27,7 +34,14 @@
         <item name="cornerSize">20%</item>
     </style>
 
-    <style name="Theme.PlantAid_Upgrade.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="roundedCornerPlantResults">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="Theme.PlantAid_Upgrade.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
 
     <style name="Theme.PlantAid_Upgrade.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -36,7 +50,12 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="TextAppearance.App.CollapsingToolbar.Collapsed" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="Theme.Plantaid_redesign.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Plantaid_redesign.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

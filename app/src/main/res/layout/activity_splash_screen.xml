@@ -72,22 +72,6 @@
 
         </RelativeLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGetStarted"
-            android:background="@drawable/btn_rounded"
-            app:backgroundTint="@color/bluish_black"
-            app:rippleColor="@color/lighter_black"
-            android:textColor="@color/fake_white"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="30dp"
-            android:fontFamily="@font/merriweather_bold"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="@string/get_started" />
 
 
     </LinearLayout>

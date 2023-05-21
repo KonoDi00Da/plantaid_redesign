@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icTask"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/dark_green"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"/>
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_green_2"
+        android:text="8:00 AM"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/icTask"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/txtTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_green"
+        android:text="Water Ponkan Plant"
+        android:layout_below="@+id/txtTime"
+        android:layout_toEndOf="@+id/icTask" />
+
+</RelativeLayout>

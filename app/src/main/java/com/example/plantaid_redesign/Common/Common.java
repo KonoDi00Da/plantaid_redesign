@@ -11,7 +11,7 @@ public class Common {
 
     public static String convertUnixToDate(long dt) {
         Date date = new Date(dt*1000L);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE | dd MMMM yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE | dd MMMM yyyy");
         String formatted = sdf.format(date);
         return formatted;
     }
@@ -29,4 +29,5 @@ public class Common {
         String formatted = sdf.format(date);
         return formatted;
     }
+
 }

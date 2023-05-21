@@ -11,6 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/leaves_bg"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+
     <ScrollView
         android:scrollbars="none"
         android:layout_width="match_parent"
@@ -28,6 +35,7 @@
 
             <ImageView
                 android:id="@+id/btnNavDrawer"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -36,21 +44,28 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="30dp"
                 android:src="@drawable/ic_tab" />
+
             <com.google.android.material.imageview.ShapeableImageView
+                android:visibility="invisible"
+                android:id="@+id/imgProfile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
                 android:background="@color/nice_green"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                android:layout_margin="30dp"/>
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
         </RelativeLayout>
 
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/txtWelcome"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hi_renette"
+            android:text="@string/hello_there"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/merriweather_bold"
@@ -123,18 +138,21 @@
                         android:layout_below="@id/txtLocation"
                         android:layout_marginStart="20dp"
                         android:layout_marginBottom="20dp"
-                        android:text="adsfasdfasdf"
+                        android:text="@string/hatdog"
                         android:textColor="@color/fake_white" />
 
                     <TextView
                         android:id="@+id/txtCondition"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="40dp"
+                        android:textAlignment="viewEnd"
+                        android:layout_toEndOf="@id/txtLocation"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/txtLocation"
+                        android:layout_alignTop="@id/txtLocation"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="20dp"
-                        android:text="Cloudy"
+                        android:text="@string/overcast_clouds"
                         android:textColor="@color/fake_white" />
 
 
@@ -162,6 +180,7 @@
                 app:layout_constraintTop_toBottomOf="@id/weatherForecastCard" />
 
             <ImageView
+                android:visibility="visible"
                 android:id="@+id/currentWeatherIcon"
                 android:src="@drawable/heavy_rain"
                 android:layout_width="80dp"
@@ -211,7 +230,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                app:state="collapsed"
+                app:state="expanded"
+                android:id="@+id/collapsibleCalendar"
                 app:primaryColor="@color/dark_green"
                 app:textColor="@android:color/white"
                 app:selectedItem_textColor="@color/dark_green"
@@ -229,24 +249,20 @@
             android:id="@+id/txt2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Reminders"
+            android:text="All Reminders"
             android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
             android:fontFamily="@font/merriweather_bold"
             android:textColor="@color/dark_green"
             android:textSize="20sp" />
 
-        <androidx.cardview.widget.CardView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="5dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="120dp"
-            android:backgroundTint="@color/light_green"/>
-
+            android:clipToPadding="false"
+            android:layout_marginBottom="80dp"
+            android:id="@+id/reyclerViewAllReminders"/>
 
     </LinearLayout>
 

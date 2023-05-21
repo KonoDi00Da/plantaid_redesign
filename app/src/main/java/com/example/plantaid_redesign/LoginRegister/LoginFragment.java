@@ -2,7 +2,10 @@ package com.example.plantaid_redesign.LoginRegister;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,13 +19,16 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plantaid_redesign.Common.LoadingDialog;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
+import com.github.hariprasanths.bounceview.BounceView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,7 +39,8 @@ import java.util.Objects;
 public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
 
-    private TextView txtRegister, txtEmail, txtPassword;
+    private EditText txtEmail, txtPassword;
+    private TextView txtForgotPass;
     private Button btnLogin;
 
     private FirebaseAuth mAuth;
@@ -51,10 +58,10 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        txtRegister = view.findViewById(R.id.txtRegister);
         btnLogin = view.findViewById(R.id.btnLogin);
         txtEmail = view.findViewById(R.id.txtEmail);
         txtPassword = view.findViewById(R.id.txtPassword);
+        txtForgotPass = view.findViewById(R.id.txtForgotPass);
 
         loadingDialog = new LoadingDialog(getActivity());
         //Initialize Firebase Auth
@@ -62,12 +69,14 @@ public class LoginFragment extends Fragment {
 
         try {
             login();
-            registerFragment();
+            forgotPass();
 
         }catch (Exception e){
             Log.d(TAG, "fix",e);
         }
     }
+
+
 
     private void login(){
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -142,21 +151,67 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void registerFragment() {
-        txtRegister.setOnClickListener(new View.OnClickListener() {
+    private void forgotPass() {
+        txtForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    NavController navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.action_loginFragment_to_registerFragment);
-                }catch (Exception e){
-                    Log.d(TAG, "register",e);
-                }
+                openDialog();
             }
         });
     }
 
-    private void forgotPass() {
+    private void openDialog() {
+        try{
+            Dialog dialog = new Dialog(getActivity());
+            //We have added a title in the custom layout. So let's disable the default title.
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
+            dialog.setCancelable(true);
+            //Mention the name of the layout of your custom dialog.
+            dialog.setContentView(R.layout.reset_password);
+            //set size to real size lol
+            Window window = dialog.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+            EditText resetEmail = dialog.findViewById(R.id.txtEmailReset);
+            Button buttonSend = dialog.findViewById(R.id.btnSend);
+
+            resetEmail.setText(resetEmail.getText().toString());
+            buttonSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (resetEmail.getText().toString().isEmpty()){
+                        resetEmail.setError("Required");
+                    } else {
+                        dialog.dismiss();
+                        loadingDialog.startLoading("Please wait");
+                        mAuth.sendPasswordResetEmail(resetEmail.getText().toString()).
+                                addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            loadingDialog.stopLoading();
+                                            toast("Please check your mail box");
+                                        } else {
+                                            toast("Invalid Email");
+                                            loadingDialog.stopLoading();
+                                            dialog.show();
+                                            txtEmail.setText(resetEmail.getText().toString());
+                                        }
+                                    }
+                                });
+                    }
+                }
+            });
+            BounceView.addAnimTo(dialog);
+            dialog.show();
+        } catch (Exception e){
+            toast("Something went wrong, Please try again");
+            Log.e("Forgot Pass Error", "exception", e);
+        }
     }
 
     private void toast(String message){

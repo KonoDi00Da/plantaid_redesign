@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_garden_nav"
+    app:startDestination="@id/myGardenFragment">
+
+    <fragment
+        android:id="@+id/myGardenFragment"
+        android:name="com.example.plantaid_redesign.MyGarden.MyGardenFragment"
+        android:label="fragment_my_garden"
+        tools:layout="@layout/fragment_my_garden" >
+        <action
+            android:id="@+id/action_myGardenFragment_to_myGardenAllPlantsFragment"
+            app:destination="@id/myGardenAllPlantsFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popExitAnim="@anim/nav_slide_out_right"
+            app:popEnterAnim="@anim/nav_slide_in_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/myGardenAllPlantsFragment"
+        android:name="com.example.plantaid_redesign.MyGarden.MyGardenAllPlantsFragment"
+        android:label="fragment_my_garden_all_plants"
+        tools:layout="@layout/fragment_my_garden_all_plants" >
+        <action
+            android:id="@+id/action_myGardenAllPlantsFragment_to_myGardenFragment"
+            app:destination="@id/myGardenFragment"
+            app:enterAnim="@anim/nav_slide_in_left"
+            app:exitAnim="@anim/nav_slide_out_right"/>
+        <action
+            android:id="@+id/action_myGardenAllPlantsFragment_to_myGardenPlantsDetails"
+            app:destination="@id/myGardenPlantsDetails"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popExitAnim="@anim/nav_slide_out_right"
+            app:popEnterAnim="@anim/nav_slide_in_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/myGardenPlantsDetails"
+        android:name="com.example.plantaid_redesign.MyGarden.MyGardenPlantsDetails"
+        android:label="fragment_my_garden_plants_details"
+        tools:layout="@layout/fragment_my_garden_plants_details" >
+        <action
+            android:id="@+id/action_myGardenPlantsDetails_to_myGardenAllPlantsFragment"
+            app:destination="@id/myGardenAllPlantsFragment"
+            app:enterAnim="@anim/nav_slide_in_left"
+            app:exitAnim="@anim/nav_slide_out_right"/>
+        <action
+            android:id="@+id/action_myGardenPlantsDetails_to_myGardenFragment"
+            app:destination="@id/myGardenFragment"
+            app:enterAnim="@anim/nav_slide_in_left"
+            app:exitAnim="@anim/nav_slide_out_right"/>
+    </fragment>
+</navigation>

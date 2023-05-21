@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:layout_marginStart="30dp"
+    android:layout_marginBottom="20dp"
     app:cardElevation="0dp"
-    android:backgroundTint="@android:color/transparent"
-    android:layout_marginTop="20dp">
+    android:backgroundTint="@android:color/transparent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:layout_below="@id/txtComPlantName"
             android:textColor="@color/dark_green"
             android:textStyle="italic"
-            android:text="Citrus reticulata"  />
+            android:text="@string/citrus_reticulata"  />
 
         <HorizontalScrollView
             android:scrollbars="none"
@@ -68,6 +68,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:id="@+id/card_Water"
                     app:cardElevation="0dp"
                     app:cardCornerRadius="50dp"
@@ -87,26 +88,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Harvest"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="50dp"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="@color/nice_green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Harvest"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@color/fake_white"/>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:id="@+id/card_Fertilize"
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
@@ -127,8 +109,10 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:id="@+id/card_Repot"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
                     app:cardElevation="0dp"
                     app:cardCornerRadius="50dp"
                     android:backgroundTint="@color/nice_green"

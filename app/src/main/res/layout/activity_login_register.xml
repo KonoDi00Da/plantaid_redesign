@@ -4,15 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/nice_green"
     tools:context=".LoginRegister.LoginRegisterActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_container_view"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="wrap_content"
+        android:paddingTop="50dp"
+        android:layout_height="100dp"
+        android:background="@android:color/transparent"
+        app:tabGravity="start"
+        android:layout_marginStart="30dp"
+        android:layout_gravity="start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabTextColor="@color/fake_white"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicatorColor="@color/dark_green"
+        app:tabSelectedTextColor="@color/dark_green"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/login_register_nav"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

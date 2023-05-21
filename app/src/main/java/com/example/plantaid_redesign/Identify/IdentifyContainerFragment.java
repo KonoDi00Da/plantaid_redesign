@@ -1,4 +1,4 @@
-package com.example.plantaid_redesign.Today;
+package com.example.plantaid_redesign.Identify;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.plantaid_redesign.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyGardenFragment#newInstance} factory method to
+ * Use the {@link IdentifyContainerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyGardenFragment extends Fragment {
+public class IdentifyContainerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class MyGardenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MyGardenFragment() {
+    public IdentifyContainerFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class MyGardenFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyGardenFragment.
+     * @return A new instance of fragment IdentifyContainerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyGardenFragment newInstance(String param1, String param2) {
-        MyGardenFragment fragment = new MyGardenFragment();
+    public static IdentifyContainerFragment newInstance(String param1, String param2) {
+        IdentifyContainerFragment fragment = new IdentifyContainerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,7 +61,6 @@ public class MyGardenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ((Home)getActivity()).updateStatusBarColor("#485E0D");
-        return inflater.inflate(R.layout.fragment_my_garden, container, false);
+        return inflater.inflate(R.layout.fragment_identify_container, container, false);
     }
 }

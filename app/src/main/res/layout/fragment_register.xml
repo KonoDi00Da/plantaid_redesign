@@ -8,43 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".LoginRegister.RegisterFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-    <ImageView
-        android:id="@+id/img1"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/login_tab"/>
-
-    <ImageView
-        android:id="@+id/img2"
-        android:layout_below="@id/img1"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/nice_green"/>
-
-    <ImageView
-        android:id="@+id/img3"
-        android:layout_alignTop="@id/img2"
-        android:layout_below="@id/img1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/login_bg"/>
-
-    <ImageView
-        android:id="@+id/img_flower_bg"
-        android:layout_alignTop="@id/img2"
-        android:layout_below="@id/img1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/login_flower_png"/>
-
-
     <ScrollView
-        android:layout_below="@id/img1"
         android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -154,6 +118,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPassword"
+                    android:paddingEnd="40dp"
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -182,35 +147,37 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtConfirmPassword"
                     android:inputType="textPassword"
+                    android:paddingEnd="40dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="80dp">
 
                 <ImageView
                     android:id="@+id/checkbox_outline"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_centerVertical="true"
                     android:backgroundTint="@color/frog_green"
                     android:background="@drawable/ic_baseline_check_box_outline_blank_24"/>
 
                 <TextView
-                    android:layout_toRightOf="@id/checkbox_outline"
-                    android:layout_width="match_parent"
+                    android:id="@+id/txtPolicy"
                     android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/checkbox_outline"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="I accept the policy and terms"
+                    android:text="@string/i_accept_the_terms_of_use"
                     android:textColor="@color/frog_green"/>
             </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnGetStarted"
+                android:id="@+id/btnRegister"
                 android:background="@drawable/btn_rounded"
                 android:backgroundTint="@color/dark_green"
                 android:textColor="@color/fake_white"
@@ -229,47 +196,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <TextView
-        android:id="@+id/txtLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="95dp"
-        android:layout_marginStart="40dp"
-        android:text="LOGIN"
-        android:textColor="@color/fake_white"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_alignStart="@id/txtRegister"
-        android:layout_alignEnd="@id/txtRegister"
-        android:layout_below="@id/txtRegister"
-        android:background="@color/fake_white"/>
-
-    <TextView
-        android:id="@+id/space"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/txtLogin"
-        android:layout_marginTop="92dp"
-        android:layout_marginStart="10dp"
-        android:text="|"
-        android:textSize="18sp"
-        android:textColor="@color/fake_white"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/space"
-        android:layout_marginTop="95dp"
-        android:layout_marginStart="10dp"
-        android:text="REGISTER"
-        android:textColor="@color/fake_white"
-        android:textStyle="bold" />
 
 </RelativeLayout>

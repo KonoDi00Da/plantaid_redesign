@@ -52,5 +52,7 @@
         <action
             android:id="@+id/action_registerFragment_to_getStartedFragment"
             app:destination="@id/getStartedFragment" />
+
     </fragment>
+
 </navigation>

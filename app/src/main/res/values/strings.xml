@@ -15,10 +15,10 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="what_s_going_on_today">What\'s going on today?</string>
-    <string name="hi_renette">Hi, Renette!</string>
+    <string name="hi_user">Hi, Renette!</string>
     <string name="overcast_clouds">Overcast Clouds</string>
     <string name="account">Account</string>
-    <string name="about_us">About Us</string>
+    <string name="about_us1">About Us</string>
     <string name="settings">Settings</string>
     <string name="good_morning">Good Morning</string>
     <string name="my_garden">My Garden</string>
@@ -28,4 +28,173 @@
     <string name="snap_any_photo_of_a_plant_to_identify_its_species">Snap any photo of a plant to\n identify its species</string>
     <string name="water">Water</string>
     <string name="logout">Logout</string>
+    <string name="we_re_glad_you_re_here_before_you_start_exploring_we_just_sent_you_the_email_confirmation">We\'re glad you\'re here! Before you start exploring, we just sent you the email confirmation.</string>
+    <string name="policy"><u>I accept the policy and terms</u></string>
+    <string name="please_enter_your_email">Please enter your email</string>
+    <string name="send_code">Send code</string>
+    <string name="all_plants">All Plants</string>
+    <string name="citrus_reticulata">Citrus reticulata</string>
+    <string name="_2_3_days">2–3 Days</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="pests_and_diseases">Pests and Diseases</string>
+    <string name="how_to_grow">How to Grow</string>
+    <string name="hatdog">hatdog</string>
+    <string name="title_activity_user_my_garden_plants">UserMyGardenPlantsActivity</string>
+
+    <string name="care_plan_view">Care Plan View</string>
+    <string name="title_activity_plant_care_add_reminder">PlantCare_Add_Reminder</string>
+    <string name="delete_reminder">Delete Reminder</string>
+    <string name="notes">Please note that accuracy can vary\nfor every identification</string>
+    <string name="lorem">Lorem Ipsum</string>
+    <string name="hello_there">Hello there!</string>
+    <string name="about_us12">About Us</string>
+
+    <!-- Strings used for weather reminders -->
+    <string name="cloudy_day">Today will be a cloudy day! Did you know that on cloudy days, plants produce much less of the energy they need to grow and bloom? Additionally, the plants\' circulatory system slows down in cool weather.</string>
+    <string name="sunny_day">Today\'s a sunny day! Did you know that morning watering is actually preferable to evening watering? Because, at night, water tends to rest in the soil, around the roots, and on the foliage, which encourages rot, fungal growth, and insects.</string>
+    <string name="light_rain">There will be a light drizzle today, it\'s a good idea to put house plants outside it gives your plants a nice and probably much-needed bath.</string>
+    <string name="moderate_rain">There will be a moderate rain today, keep check of your plant\'s water level and make sure they\'re not over-watered!</string>
+    <string name="heavy_rain">There will be a thunderstorm today, better cover your plants with overturned pots, bowls, buckets, or other appropriately-sized containers to keep them from suffering wind and rain damage.</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Strings used for About us-->
+
+    <string name="about_us">A passion with gardening and Home cultivation gives way to PlantAid. PlantAid is now working to create more houseplant essentials that offer answers for maintaining, caring for, and propagating plants.</string>
+    <string name="about_us_2">A plant-care and journaling app called PlantAid might help beginning gardeners with their planting process. An in-app weather prediction with enhanced notifications, a journal for gardening experiences, and a plant identifier that can classify plant species from images.</string>
+    <string name="about_us_team">Meet the PlantAid team – we’re growing every single day.</string>
+    <string name="about_us_3">Chelsea Kyla Aurelio,
+John Lester Arellano
+Renette Cabiten
+Christian Javen Orante
+</string>
+
+    <!-- Strings used for Terms of Use -->
+
+    <string name="t1">Thank you for visiting the PlantAid application. Your use of this application and all Content on it (including, without limitation, any information, materials, documents, texts, images, photographs, video clips, directories, files, databases, listings, services, and/or mechanisms) is subject to the legally binding terms and conditions that are forth below (the \"Terms\").</string>
+    <string name="t2">YOUR USE OF THE APPLICATION CONFIRMS YOUR ACCEPTANCE OF THESE TERMS OF USE AND AGREEMENT TO BE BOUND BY THEM AND ANY AND ALL OTHER APPLICABLE TERMS REFERRED HEREIN ABSOLUTELY, SO PLEASE READ THE TERMS OF USE SET FORTH BELOW AS THEY APPLY TO YOUR USE OF THE APPLICATION.</string>
+    <string name="t3">1)   Updates of the Application
+
+Without giving you advance notification, we have the right to alter the appearance, contents, or functionality of the application at any time and at our sole discretion.
+</string>
+    <string name="t4">2)   Amendment of Terms
+
+We reserve the right to change the Terms of Use at any time and without notifying or commitment to you. You agree to be bound by any changes made to the Terms of Use by using the application after they have been made.
+</string>
+    <string name="t5">3)  User’s Conduct
+
+As a condition of your use of the Website, you must not:
+
+•	Trespass on, break into, access, use, or attempt to access, use, any other aspects of our servers and/or any data areas for which you have not received our consent;
+
+•	Restricting or impairing another user\'s ability to utilize and enjoy the application. You have no ownership or other rights in the application\'s content, and you agree not to use it in any way or for any purpose other than those allowed by these terms of use.
+
+•	Any content of the application may not be copied, shared, or disclosed in any way, including without limitation through any automated or manual "scraping."
+</string>
+    <string name="t6">If you violate one or more of your obligations, any other aspect of this Agreement, any relevant federal or state law, any other legal reason, or at our decision, PlantAid may suspend or cancel your account or access to its application with or without prior notice.</string>
+    <string name="t7">4)   Access
+
+Access to this application, as well as access to and use of its contents, is explicitly restricted to those who have expressed an interest in learning more about PlantAid services or in becoming one of their customers. Access is expressly prohibited for the purpose of competing with PlainAid and is considered an unauthorized access to the website and the servers that host it. This app\'s contents, graphics, code, and programs may not be downloaded or copied for any reason.
+
+5)   Third-party Content
+
+The Content can include content that has been supplied by third parties or that PlantAid has gathered from references or other sources. The information on the application should not be interpreted as a recommendation or endorsement by PlantAid of any person, good, or service for any reason.
+
+PlantAid does not independently check such Content, hence it is not PlantAid\'s responsibility if any such Content is out-of-date. In light of this, we disclaim any liability with regard to such Content. Any reliance on such Content, including its use, is at your own risk.
+
+6)   Indemnity
+
+In the case that you violate any of these Terms of Use and/or use the application, you undertake to protect, cover, and keep PlantAid harmless from and against all liabilities, damages, claims, actions, expenses, and expenditures. If necessary, we may take part in the defense of any claim or legal action as well as any settlement negotiations. No settlement that would negatively impact our rights or responsibilities may be reached without first receiving our written consent. We reserve the right to take sole responsibility for the defense and management of any claim or action at our own expense and with prior notification to you.
+
+7)   Intellectual Property Rights
+
+All intellectual property rights that are currently in place with regard to the application and its Content are either owned by PlantAid or have been granted to PlantAid under legal permission for use on the application. PlantAid is covered by trademark, service mark, trade dress, copyright, trade secret, and/or other proprietary or intellectual property rights or licenses held by PlantAid, as well as page headers, custom graphics, buttons, photos, and other content on this Website.
+
+8)   Limited Liability and Warranty
+
+All content is just for your general informational use. PlantAid disclaims any liability in relation to such Content.
+</string>
+
+    <string name="t8">THE APPLICATION IS FOR YOUR USE ONLY AND WE MAKE NO REPRESENTATION OR WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES ON MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE. YOUR ACCESS TO AND USE OF OUR APPLICATION IS AT YOUR SOLE RISK AND IS PROVIDED \"AS IS,\" \"AS AVAILABLE\"
+
+PlantAid does not guarantee or assume any responsibility that:</string>
+
+    <string name="t9">•	the application\'s content is trustworthy, accurate, up-to-date, and suitable for any use other than general reference;
+•	the application\'s content is free of defects, errors, mistakes, viruses, or anything else that could alter, delete, add to, or harm your software, data, or equipment;
+•	There will be continuous or available access to the application;
+•	Using the application will result in a particular result; or
+•	The application\'s vulnerabilities will be fixed.
+
+9)	Partial Invalidity
+The illegality, falsity, or invalidation of any requirement of these Terms of Use under the law of any authority shall not affect that provision\'s legality, validity, or enforceability under the law of any other authority, nor shall it affect the legality, validity, or enforceability of any other provision.
+
+10)	Several Users
+When two or more individuals agree to these terms of use as users, their responsibility under them is joint and their rights are collective.
+11)	Miscellaneous
+No waiver of any breach under these Terms of Use will amount to a waiver of any other breach. The headings in these Terms of Use are merely for convenience and have no impact on how they should be interpreted.
+12)	Termination
+We have the ability to terminate your right of access to the application and its Content at any time, for any reason, without providing you with prior notice.
+</string>
+
+    <!-- Strings used for Help -->
+
+    <string name="h1">How to identify a plant?</string>
+    <string name="h2">Make sure your plant is in the figure and the lighting is good before taking a picture. Flowers, leaves, or a complete plant can all be captured on camera. Avoid combining several species in one frame because this can cause identification errors. Minimize potential dark, overexposed, and blurry photos as well. If you\'re unhappy with the outcomes, try again while following to the following important advice.</string>
+    <string name="h3">How many plants can PlantAid identify?</string>
+    <string name="h4">The picture of a user\'s plant can be taken, and an automatic list of plants with similar appearances and their popular and scientific names will be displayed. 38,700 plant species are the maximum allowed by the plant identification system. However, feel free to email us at support@conceptivapps.com if you have any queries or ideas on how we can enhance our software.</string>
+    <string name="h5">Uninstall app</string>
+    <string name="h6">The app will be deleted if you decide to remove it, but your subscriptions will still be valid and your regular payments will be processed. The Play Store app\'s in My apps and games section allows you to cancel the connected subscriptions whenever you choose.</string>
+    <string name="h7">Notifications</string>
+    <string name="h8">You may turn notifications off at any time in the Settings app > Apps and Notifications > Notifications. Find the app PlantAid and then tap the toggle to block push-notifications.</string>
+    <string name="h9">Support</string>
+    <string name="h10">If you have any questions or comments, feel free to contact us at plantaid.apps@gmail.com.</string>
+
+    <!-- Strings used for Privacy Policy -->
+
+    <string name="p1">The Plant Care Reminder app was created by PlantAid as an ad-supported software. PlantAid is having this SERVICE for free, and it\'s meant to be used just how it is. </string>
+    <string name="p2">This page is used to provide information about our policies regarding the gathering, use, and disclosure of Personal Information to users who might be interested in using our service.</string>
+    <string name="p3">If you choose to use our service, then, you agree to this policy\'s information gathering and use. We use the personal information we gather to provide and enhance the Service. We won\'t use or expose your information to everyone else other than as stated in this privacy policy.</string>
+    <string name="p4">The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at PlantAid unless otherwise defined in this Privacy Policy.</string>
+    <string name="p5">Information Collection and Use</string>
+    <string name="p6">For a better experience, while using our Service, You may be required to tell us some personally identifiable information. The information that we require will be kept on your device; it is not in any way collected by us</string>
+    <string name="p7">The app does use third party services that may collect information used to identify you. Link to privacy policy of third party service providers used by the app</string>
+    <string name="p8">•	Google Play Services
+•	AdMob
+•	Google Analytics for Firebase
+•	Firebase Crashlytics
+</string>
+    <string name="p9">Log Data</string>
+    <string name="p10">You should be informed that every time you use our Service, in case that there is an issue with the app, log data is collected (via third party products) on your device. Your device\'s Internet Protocol ("IP") address, name, operating system version, the app\'s configuration when using our service, the time and date of your use of the service, and other statistics could all be included in this log data.</string>
+    <string name="p11">Cookies</string>
+    <string name="p12">Cookies are small data files that are frequently utilized as anonymous unique identifiers. These are downloaded into the internal storage of your device by your browser from the websites that you visit.
+These "cookies" are not specifically used by this service. To obtain information and improve their services, third-party code and libraries may be integrated into the app. These cookies are obtainable for approval or refusal, and you are informed when one is being sent to your device. You might not be able to use all of our Service if you choose to refuse our cookies.
+</string>
+    <string name="p13">Service Providers
+We might collaborate with third-party companies and individuals for the following reasons:
+•	to improve our Service easier;
+•	to offer the Service in our place;
+•	to provide services-related  Service; or
+•	to help us better understand how our Service is used.
+Users of this Service should be informed that these third parties may have access to their personal information. To complete the tasks assigned to them on our behalf.  However, they obligated to keep the information private and not use it or disclose it for any other reason.
+</string>
+
+    <string name="p14">Security
+We acknowledge your trust in investing us with your personal information, so we make an effort to protect it through legally acceptable measures. However, take into consideration that no form of electronic storage or transmission over the internet is 100% secure and reliable, and we cannot ensure its complete security.
+</string>
+    <string name="p15">Links to Other Sites
+Links to other websites may be found on this service. A third-party link will take you to that website if you click on it. Kindly be informed that we do not operate these external websites. This is why we encourage you to carefully read these websites\' privacy policies. The content, privacy practices, or other policies of any third-party websites or services are not under our control or responsibility.
+</string>
+    <string name="p16">Children\’s Privacy
+These services are not intended for users under the age of 13. Children under the age of 13 are not the subjects of any information we knowingly acquire about them. In the case, we identify that a kid under 13 has provided us with personal information, we promptly delete this from our servers. Get in touch with us so that we can take the required steps if you are a parent or guardian and you are concerned that your child has provided us with sensitive information.
+</string>
+    <string name="p17">Changes to This Privacy Policy
+Our privacy policy may regularly be updated. As a result, you are encouraged to constantly check this page for updates. Any changes will be notified to you by posting the updated Privacy Policy on this page.
+</string>
+    <string name="p18">Contact Us
+Kindly contact with us at plantaid.apps@gmail.com if you have any inquiries or comments on my privacy policy.
+</string>
+    <string name="i_accept_the_terms_of_use"><u>I accept the terms of use</u></string>
+
+
 </resources>

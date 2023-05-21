@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Identify.IdentifyMoreInfoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/trans_black"
+                android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                android:tintMode="@color/white"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabCustomSize="40dp"
+                app:pressedTranslationZ="0dp" />
+
+            <TextView
+                android:id="@+id/com_plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_back"
+                android:text="More information"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/dark_green_2" />
+
+            <TextView
+                android:id="@+id/sci_plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/com_plant"
+                android:text="@string/citrus_reticulata"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/shapeableImageView2"
+                android:textSize="25sp"
+                android:textStyle="italic"
+                android:fontFamily="@font/merriweather_bold"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/dark_green"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageView2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/dark_green"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="30dp"
+                android:layout_alignTop="@id/com_plant"
+                android:layout_alignParentEnd="true"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+
+            <TextView
+                android:id="@+id/txtScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9%"
+                android:gravity="center"
+                android:layout_alignBottom="@id/shapeableImageView2"
+                android:layout_alignStart="@id/shapeableImageView2"
+                android:layout_alignTop="@id/shapeableImageView2"
+                android:layout_alignEnd="@id/shapeableImageView2"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:scrollbars="none"
+            android:layout_marginTop="10dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img1"
+                    app:shapeAppearanceOverlay="@style/roundedCornerPlantResults"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/plant_img_sample"
+                    android:scaleType="centerCrop"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img2"
+                    app:shapeAppearanceOverlay="@style/roundedCornerPlantResults"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/plant_img_sample"
+                    android:scaleType="centerCrop"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img3"
+                    app:shapeAppearanceOverlay="@style/roundedCornerPlantResults"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/plant_img_sample"
+                    android:scaleType="centerCrop"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img4"
+                    app:shapeAppearanceOverlay="@style/roundedCornerPlantResults"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/plant_img_sample"
+                    android:scaleType="centerCrop"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img5"
+                    app:shapeAppearanceOverlay="@style/roundedCornerPlantResults"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/plant_img_sample"
+                    android:scaleType="centerCrop"/>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/light_green">
+
+            <LinearLayout
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="Family"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_green" />
+
+                <TextView
+                    android:id="@+id/txtFamily"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="@string/lorem"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/light_green">
+
+            <LinearLayout
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="Genus"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_green" />
+
+                <TextView
+                    android:id="@+id/txtGenus"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="@string/lorem"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/light_green">
+
+            <LinearLayout
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="Common\nName(s)"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_green" />
+
+                <TextView
+                    android:id="@+id/txtCommonNames"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="@string/lorem"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/light_green">
+
+            <LinearLayout
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="Additional\nInformation"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_green" />
+
+                <TextView
+                    android:id="@+id/txtInfoLink"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_back"
+                    android:text="@string/lorem_ipsum"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfirm"
+            android:background="@drawable/btn_rounded"
+            android:backgroundTint="@color/bluish_black"
+            android:textColor="@color/fake_white"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:shadowColor="@color/bluish_black"
+            android:elevation="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="80dp"
+            android:fontFamily="@font/merriweather_bold"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="Confirm" />
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>

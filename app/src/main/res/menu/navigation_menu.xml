@@ -15,7 +15,7 @@
         android:id="@+id/menuAboutUs"
         android:icon="@drawable/ic_baseline_info_24"
         android:iconTint="@color/nice_green"
-        android:title="@string/about_us" />
+        android:title="@string/about_us12" />
 
     <item
         android:id="@+id/menuLogout"

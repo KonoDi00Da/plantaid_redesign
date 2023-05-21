@@ -1,14 +1,14 @@
-package com.example.plantaid_redesign;
+package com.example.plantaid_redesign.Today;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,37 +16,37 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.plantaid_redesign.Adapter.WeatherForecastAdapter;
 import com.example.plantaid_redesign.Common.Common;
 import com.example.plantaid_redesign.Model.WeatherForecastResult;
+import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Retrofit.IOpenWeatherMap;
 import com.example.plantaid_redesign.Retrofit.RetrofitClient;
-import com.example.plantaid_redesign.Today.Home;
-import com.example.plantaid_redesign.Today.TodayFragment;
+import com.example.plantaid_redesign.Utilities.BackpressedListener;
 import com.squareup.picasso.Picasso;
 
-import java.time.LocalTime;
 import java.util.Calendar;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class WeatherForecastFragment extends Fragment {
+public class WeatherForecastFragment extends Fragment implements  BackpressedListener{
+    public static final String TAG = "WeatherForecast";
     private ImageView btn_back, time_bg, currentWeatherIcon;
     private TextView txtLocation, txtCondition, txtTemperature, txtDayAndDate;
     private RecyclerView rec_forecast;
+    private RelativeLayout weatherForecastView;
 
     private CompositeDisposable compositeDisposable;
     private IOpenWeatherMap mService;
+    private NavController navController;
 
     static WeatherForecastFragment instance;
 
@@ -81,6 +81,7 @@ public class WeatherForecastFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
         btn_back = view.findViewById(R.id.btn_back);
         time_bg = view.findViewById(R.id.time_bg);
         currentWeatherIcon = view.findViewById(R.id.currentWeatherIcon);
@@ -89,6 +90,7 @@ public class WeatherForecastFragment extends Fragment {
         txtTemperature = view.findViewById(R.id.txtTemperature);
         txtDayAndDate = view.findViewById(R.id.txtDayAndDate);
         rec_forecast = view.findViewById(R.id.rec_forecast);
+        weatherForecastView = view.findViewById(R.id.weatherForecastView);
 
         try {
             rec_forecast.setHasFixedSize(true);
@@ -99,8 +101,8 @@ public class WeatherForecastFragment extends Fragment {
             btn_back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((Home) getActivity()).updateStatusBarColor("#485E0D");
-                    getActivity().onBackPressed();
+                    navController.navigate(R.id.action_weatherForecastFragment_to_todayFragment);
+                    ((Home)getActivity()).hideBottomNavigation(false);
                 }
             });
 
@@ -147,6 +149,7 @@ public class WeatherForecastFragment extends Fragment {
 
         WeatherForecastAdapter adapter = new WeatherForecastAdapter(getContext(), weatherForecastResult);
         rec_forecast.setAdapter(adapter);
+        weatherForecastView.setVisibility(View.VISIBLE);
         Log.d("adapter", "reached");
 
     }
@@ -171,4 +174,25 @@ public class WeatherForecastFragment extends Fragment {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        navController.navigate(R.id.action_weatherForecastFragment_to_todayFragment);
+        ((Home)getActivity()).hideBottomNavigation(false);
+    }
+
+    public static BackpressedListener backpressedlistener;
+
+    @Override
+    public void onPause() {
+        backpressedlistener = null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener = this;
+    }
+
 }

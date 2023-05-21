@@ -1,44 +1,62 @@
 package com.example.plantaid_redesign.Today;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
-import android.media.Image;
-import android.nfc.Tag;
+import android.content.ClipData;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.plantaid_redesign.Adapter.ReminderPlantAll_Adapter;
 import com.example.plantaid_redesign.Common.Common;
+import com.example.plantaid_redesign.LoginRegister.LoginRegisterActivity;
+import com.example.plantaid_redesign.Model.PlantReminderModel;
+import com.example.plantaid_redesign.Model.User;
 import com.example.plantaid_redesign.Model.WeatherResult;
+import com.example.plantaid_redesign.MyGarden.UserMyGardenPlantsActivity;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Retrofit.IOpenWeatherMap;
 import com.example.plantaid_redesign.Retrofit.RetrofitClient;
-import com.example.plantaid_redesign.WeatherForecastFragment;
+import com.example.plantaid_redesign.Utilities.BackpressedListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.shrikanthravi.collapsiblecalendarview.data.Day;
+import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 import com.squareup.picasso.Picasso;
 
-import java.time.LocalTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -48,16 +66,32 @@ import retrofit2.Retrofit;
 
 public class TodayFragment extends Fragment {
     private static final String TAG = "home";
-    private ImageView btnNavDrawer, imgTimeBg, currentWeatherIcon;
+    private ImageView btnNavDrawer, imgTimeBg, currentWeatherIcon, imgProfile;
     private CardView weatherForecastCard;
-    private TextView txtTemperature, txtLocation, txtCondition, txtDateTime;
+    private TextView txtTemperature, txtLocation, txtCondition, txtDateTime, txtWelcome;
     private RelativeLayout weatherForecastView;
     private String txtSunrise, txtSunset, txtGeoCoords;
+    private NavController navController;
+    private String fname, lname, email;
+
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private CollapsibleCalendar collapsibleCalendar;
+    private ReminderPlantAll_Adapter cAdapter;
+    private String plantCommonName, userKey;
 
     private ProgressBar loading;
 
     private CompositeDisposable compositeDisposable;
     private IOpenWeatherMap mService;
+    private String selectedDate;
+
+    private RecyclerView recyclerView;
+    ArrayList<PlantReminderModel> list = new ArrayList<>();
+
+
 
     public TodayFragment(){
         compositeDisposable = new CompositeDisposable();
@@ -70,13 +104,16 @@ public class TodayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_today, container, false);
         ((Home)getActivity()).updateStatusBarColor("#485E0D");
-        return inflater.inflate(R.layout.fragment_today, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
         btnNavDrawer = view.findViewById(R.id.btnNavDrawer);
         weatherForecastCard = view.findViewById(R.id.weatherForecastCard);
         imgTimeBg = view.findViewById(R.id.imgTimeBg);
@@ -87,18 +124,159 @@ public class TodayFragment extends Fragment {
         txtDateTime = view.findViewById(R.id.txtDateTime);
         loading = view.findViewById(R.id.progressBar);
         weatherForecastView = view.findViewById(R.id.weatherForecastView);
+//        imgProfile = view.findViewById(R.id.imgProfile);
+        txtWelcome = view.findViewById(R.id.txtWelcome);
+        collapsibleCalendar = view.findViewById(R.id.collapsibleCalendar);
+        recyclerView = view.findViewById(R.id.reyclerViewAllReminders);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setHasFixedSize(true);
+        cAdapter = new ReminderPlantAll_Adapter(list, getActivity());
+        recyclerView.setAdapter(cAdapter);
+
+
+        //Initialize firebase
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
 
         try{
             openDrawer();
+            greetUser();
             openWeatherForecastFragment();
             setBackgroundImage();
             getWeatherInformation();
+            selectCalendar();
+            showReminders();
 
         }catch (Exception e){
             Log.e(TAG, "tab", e);
         }
 
     }
+
+    public void openDrawer(){
+        btnNavDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle result = new Bundle();
+                result.putString("bundleKey", "clicked");
+                // The child fragment needs to still set the result on its parent fragment manager
+                getParentFragmentManager().setFragmentResult("requestKey", result);
+
+            }
+        });
+    }
+
+
+    public void showReminders(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("myGarden");
+        databaseReference.child("Users").keepSynced(true);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        String key = dataSnapshot.getKey();
+                        Log.d("Module_today", "onDataChange: 1    " + dataSnapshot.getKey());
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()){
+                            Log.d("Module_today", "onDataChange: 2    " + dataSnapshot2.getKey());
+                            for (DataSnapshot dataSnapshot3 : dataSnapshot2.getChildren()){
+                                Log.d("Module_today", "onDataChange: 3    " + dataSnapshot3.getKey());
+                                PlantReminderModel plantReminders = dataSnapshot3.getValue(PlantReminderModel.class);
+                                list.add(plantReminders);
+
+
+                            }
+                        }
+                    }
+                    cAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                toast("Error");
+
+            }
+        });
+
+    }
+
+
+    public void selectCalendar(){
+        
+        collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
+            @Override
+            public void onDaySelect() {
+                String month = null;
+                StringBuilder m = null;
+                Day day = collapsibleCalendar.getSelectedDay();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    month = Month.of(day.getMonth() + 1).name().toLowerCase(Locale.ROOT);
+                    m = new StringBuilder(month);
+                    m.setCharAt(0, Character.toUpperCase(m.charAt(0)));
+                }
+                selectedDate = m + "_" + day.getDay() + ",_" + day.getYear();
+//                toast(selectedDate);
+            }
+
+            @Override
+            public void onDayChanged() {
+
+            }
+
+            @Override
+            public void onClickListener() {
+
+            }
+
+            @Override
+            public void onItemClick(View view) {
+
+            }
+
+            @Override
+            public void onDataUpdate() {
+
+            }
+
+            @Override
+            public void onMonthChange() {
+
+            }
+
+            @Override
+            public void onWeekChange(int i) {
+
+            }
+        });
+    }
+
+    public void greetUser(){
+        DatabaseReference reference = database.getReference("Users").child(currentUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                if (user != null){
+                    fname = user.firstName;
+                    lname = user.lastName;
+                    email = user.email;
+
+                    StringBuilder sb = new StringBuilder(fname);
+                    sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+                    txtWelcome.setText("Hello, "+ sb.toString() + "!");
+                    txtWelcome.setVisibility(View.VISIBLE);
+                }
+                else{
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onStop() {
@@ -136,7 +314,6 @@ public class TodayFragment extends Fragment {
                         weatherForecastView.setVisibility(View.VISIBLE);
                         loading.setVisibility(View.GONE);
 
-
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -146,29 +323,17 @@ public class TodayFragment extends Fragment {
                 }));
     }
 
-
-    public void openDrawer(){
-        btnNavDrawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle result = new Bundle();
-                result.putString("bundleKey", "clicked");
-                // The child fragment needs to still set the result on its parent fragment manager
-                getParentFragmentManager().setFragmentResult("requestKey", result);
-
-            }
-        });
-    }
-
     public void openWeatherForecastFragment(){
         weatherForecastCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WeatherForecastFragment weatherForecastFragment= new WeatherForecastFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.full_body_container, weatherForecastFragment, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                ((Home)getActivity()).hideBottomNavigation(true);
+                navController.navigate(R.id.action_todayFragment_to_weatherForecastFragment);
+//                WeatherForecastFragment weatherForecastFragment= new WeatherForecastFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.body_container, weatherForecastFragment, "findThisFragment")
+//                        .addToBackStack(null)
+//                        .commit();
             }
         });
     }
@@ -188,5 +353,25 @@ public class TodayFragment extends Fragment {
         }
     }
 
+//    private void logoutUser() {
+//        try{
+//            imgProfile.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    FirebaseAuth.getInstance().signOut();
+//                    Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+//                    startActivity(intent);
+//                    getActivity().finish();
+//                }
+//            });
+//
+//        } catch (Exception e){
+//            toast("Something went wrong, please try again");
+//            Log.e("Logout error", "exception", e);
+//        }
+//    }
+    private void toast(String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
 
 }

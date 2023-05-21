@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/identify_nav"
+    app:startDestination="@id/identifyFragment">
+
+    <fragment
+        android:id="@+id/identifyFragment"
+        android:name="com.example.plantaid_redesign.Identify.IdentifyFragment"
+        android:label="fragment_identify"
+        tools:layout="@layout/fragment_identify" >
+        <action
+            android:id="@+id/action_identifyFragment_to_identifyResultsFragment"
+            app:destination="@id/identifyResultsFragment" />
+        <action
+            android:id="@+id/action_identifyFragment_to_identifyHistoryFragment3"
+            app:destination="@id/identifyHistoryFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/identifyResultsFragment"
+        android:name="com.example.plantaid_redesign.Identify.IdentifyResultsFragment"
+        android:label="fragment_identify_results"
+        tools:layout="@layout/fragment_identify_results" >
+        <action
+            android:id="@+id/action_identifyResultsFragment_to_identifyFragment"
+            app:destination="@id/identifyFragment" />
+        <action
+            android:id="@+id/action_identifyResultsFragment_to_identifyMoreInfoFragment"
+            app:destination="@id/identifyMoreInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/identifyMoreInfoFragment"
+        android:name="com.example.plantaid_redesign.Identify.IdentifyMoreInfoFragment"
+        android:label="fragment_identify_more_info"
+        tools:layout="@layout/fragment_identify_more_info" >
+        <action
+            android:id="@+id/action_identifyMoreInfoFragment_to_identifyResultsFragment"
+            app:destination="@id/identifyResultsFragment" />
+        <action
+            android:id="@+id/action_identifyMoreInfoFragment_to_identifyFragment"
+            app:destination="@id/identifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/identifyHistoryFragment3"
+        android:name="com.example.plantaid_redesign.Identify.IdentifyHistoryFragment"
+        android:label="fragment_identify_history"
+        tools:layout="@layout/fragment_identify_history" >
+        <action
+            android:id="@+id/action_identifyHistoryFragment3_to_identifyFragment"
+            app:destination="@id/identifyFragment" />
+        <action
+            android:id="@+id/action_identifyHistoryFragment3_to_identifyMoreInfoFragment"
+            app:destination="@id/identifyMoreInfoFragment" />
+        <action
+            android:id="@+id/action_identifyHistoryFragment3_to_identifyMoreInfoFragment_Identified2"
+            app:destination="@id/identifyMoreInfoFragment_Identified2" />
+    </fragment>
+    <fragment
+        android:id="@+id/identifyMoreInfoFragment_Identified2"
+        android:name="com.example.plantaid_redesign.Identify.IdentifyMoreInfoFragment_Identified"
+        android:label="fragment_identify_more_info__identified"
+        tools:layout="@layout/fragment_identify_more_info__identified" >
+        <action
+            android:id="@+id/action_identifyMoreInfoFragment_Identified2_to_identifyHistoryFragment3"
+            app:destination="@id/identifyHistoryFragment3" />
+    </fragment>
+</navigation>
