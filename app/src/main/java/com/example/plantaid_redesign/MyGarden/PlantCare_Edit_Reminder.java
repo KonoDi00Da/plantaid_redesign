@@ -198,7 +198,9 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
     }
     private void addToFirebase() {
         DatabaseReference userRef = database.getReference().child("PlantReminders").child(currentUser.getUid());
-        PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name,newReminder,newDate,newTime, user_key, reminder_key, notificationID, requestCode);
+        PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name,newReminder,
+                String.valueOf(selectedDate),
+                String.valueOf(time), user_key, reminder_key, notificationID, requestCode);
         userRef.child(reminder_key).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
