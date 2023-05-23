@@ -95,7 +95,9 @@ public class PlantCareFragment extends Fragment {
                 if(snapshot.exists()){
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
-                        list.add(plantReminders);
+                        if(plantCommonName.equals(plantReminders.getPlantName())){
+                            list.add(plantReminders);
+                        }
                     }
                     Collections.reverse(list);
                     cAdapter.notifyDataSetChanged();
