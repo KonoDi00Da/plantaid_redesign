@@ -128,7 +128,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                     return;
                 }
                 addToFirebase();
-
+                setNotification();
                 Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
                 //intent.putExtra("plant_image", model.getImage());
                 intent.putExtra("commonName", plant_name);
