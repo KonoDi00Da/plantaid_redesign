@@ -160,40 +160,7 @@ public class PlantInfoFragment extends Fragment {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ref1.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
-                                if(plantReminders != null){
-                                    String reminderKey = plantReminders.reminderKey;
-                                    Query query = ref1.child(reminderKey).orderByChild("plantName").equalTo(commonName);
-
-                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            dataSnapshot.getRef().removeValue();
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            // Handle any potential errors
-                                        }
-                                    });
-                                }
-
-                            }
-                            userRef.removeValue();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+                userRef.removeValue();
 
             }
 
@@ -202,6 +169,40 @@ public class PlantInfoFragment extends Fragment {
 
             }
         });
+// eto yung nag ttriger ng pagkaka add ay deleted agad
+//        ref1.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
+//                        if (plantReminders != null) {
+//                            String reminderKey = plantReminders.reminderKey;
+//                            Query query = ref1.child(reminderKey).orderByChild("plantName").equalTo(commonName);
+//                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                    dataSnapshot.getRef().removeValue();
+//                                    // Move userRef.removeValue() here
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                    // Handle any potential errors
+//                                }
+//                            });
+//                        }
+//                    }
+//                    // Remove userRef.removeValue() from here
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
         toast("Plant Deleted");
 
         Intent intent = new Intent(getActivity(), Home.class);
