@@ -12,6 +12,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,6 +46,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -114,7 +116,9 @@ public class Home extends AppCompatActivity {
                                 }
                                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Home.this);
                                 fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+
                             }
+
                         }
 
                         @Override
@@ -123,8 +127,8 @@ public class Home extends AppCompatActivity {
                         }
                     }).check();
 
-        }catch (Exception e){
-            Log.e(TAG,"bottomnav", e);
+        } catch (Exception e) {
+            Log.e(TAG, "bottomnav", e);
         }
     }
 
@@ -133,13 +137,14 @@ public class Home extends AppCompatActivity {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-
                 Common.current_location = locationResult.getLastLocation();
-
+                home();
                 Log.d("Location",locationResult.getLastLocation().getLatitude()+"/"+locationResult.getLastLocation().getLongitude());
             }
         };
     }
+
+
 
     public void buildLocationRequest() {
         locationRequest = new LocationRequest();
@@ -147,6 +152,7 @@ public class Home extends AppCompatActivity {
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(3000);
         locationRequest.setSmallestDisplacement(10.0f);
+
     }
 
     private void setBottomNav(){
