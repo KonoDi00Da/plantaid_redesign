@@ -98,7 +98,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/cloudy" />
+                        android:src="@drawable/ic_water"
+                        app:tint="@color/dark_green" />
 
                     <TextView
                         android:id="@+id/txtWater"
@@ -115,6 +116,7 @@
 
                     <TextView
                         android:id="@+id/txtWaterDays"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
@@ -148,7 +150,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/cloudy" />
+                        android:src="@drawable/ic_growth"
+                        app:tint="@color/dark_green"/>
 
                     <TextView
                         android:id="@+id/txtGrowth"
@@ -165,6 +168,7 @@
 
                     <TextView
                         android:id="@+id/txtGrowthDays"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
@@ -197,7 +201,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/cloudy" />
+                        android:src="@drawable/ic_season"
+                        app:tint="@color/dark_green"/>
 
                     <TextView
                         android:id="@+id/txtSeason"
@@ -214,6 +219,7 @@
 
                     <TextView
                         android:id="@+id/txtSeasonDays"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"

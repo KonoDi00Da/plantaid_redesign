@@ -114,7 +114,7 @@ public class MyGardenPlantsDetails extends Fragment implements BackpressedListen
             public void onClick(View v) {
 
                 DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
-                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                userRef.addListenerForSingleValueEvent( new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         //get date added
@@ -122,8 +122,6 @@ public class MyGardenPlantsDetails extends Fragment implements BackpressedListen
                         String userPlantKey = userRef.push().getKey();
                         User_Plants userPlants = new User_Plants(comPlant, sciPlant, image, key, userPlantKey);
                         userRef.child(plantID).child(userPlantKey).setValue(userPlants);
-                        toast("Plant added successfully");
-
                     }
 
                     @Override
@@ -131,6 +129,7 @@ public class MyGardenPlantsDetails extends Fragment implements BackpressedListen
 
                     }
                 });
+                toast("Plant added successfully");
 
                 navController.navigate(R.id.action_myGardenPlantsDetails_to_myGardenFragment);
                 ((Home)getActivity()).hideBottomNavigation(false);

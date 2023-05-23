@@ -30,6 +30,7 @@ import com.example.plantaid_redesign.Utilities.BackpressedListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -40,7 +41,7 @@ import retrofit2.Retrofit;
 public class WeatherForecastFragment extends Fragment implements  BackpressedListener{
     public static final String TAG = "WeatherForecast";
     private ImageView btn_back, time_bg, currentWeatherIcon;
-    private TextView txtLocation, txtCondition, txtTemperature, txtDayAndDate;
+    private TextView txtLocation, txtCondition, txtTemperature, txtDayAndDate, txtMessage;
     private RecyclerView rec_forecast;
     private RelativeLayout weatherForecastView;
 
@@ -91,6 +92,7 @@ public class WeatherForecastFragment extends Fragment implements  BackpressedLis
         txtDayAndDate = view.findViewById(R.id.txtDayAndDate);
         rec_forecast = view.findViewById(R.id.rec_forecast);
         weatherForecastView = view.findViewById(R.id.weatherForecastView);
+        txtMessage = view.findViewById(R.id.txtMessage);
 
         try {
             rec_forecast.setHasFixedSize(true);
@@ -145,7 +147,20 @@ public class WeatherForecastFragment extends Fragment implements  BackpressedLis
         txtLocation.setText(new StringBuilder(weatherForecastResult.city.name));
         txtTemperature.setText(new StringBuilder(String.valueOf((int)weatherForecastResult.list.get(0).main.getTemp())).append("°C"));
         txtDayAndDate.setText(new StringBuilder(Common.convertUnixToDate(weatherForecastResult.list.get(0).dt)));
-        txtCondition.setText(new StringBuilder(weatherForecastResult.list.get(0).weather.get(0).getDescription()));
+        String condition = String.valueOf(new StringBuilder(weatherForecastResult.list.get(0).weather.get(0).getDescription()));
+        txtCondition.setText(condition);
+        switch (condition.toLowerCase(Locale.ROOT)){
+            case "cloudy":
+                txtMessage.setText(R.string.cloudy_day);
+            case "light rain":
+                txtMessage.setText(R.string.sunny_day);
+            case "moderate rain":
+                txtMessage.setText(R.string.moderate_rain);
+            case "heavy rain":
+                txtMessage.setText(R.string.heavy_rain);
+            default:
+                txtMessage.setText(R.string.cloudy_day);
+        }
 
         WeatherForecastAdapter adapter = new WeatherForecastAdapter(getContext(), weatherForecastResult);
         rec_forecast.setAdapter(adapter);

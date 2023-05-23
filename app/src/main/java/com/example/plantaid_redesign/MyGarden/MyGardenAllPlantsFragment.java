@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.plantaid_redesign.Adapter.AllPlantListAdapter;
+import com.example.plantaid_redesign.Common.LoadingDialog;
 import com.example.plantaid_redesign.Model.AllPlantsList;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
@@ -54,6 +56,7 @@ public class MyGardenAllPlantsFragment extends Fragment implements  BackpressedL
         btnBack = view.findViewById(R.id.btnBack);
         navController = Navigation.findNavController(view);
         recyclerView = view.findViewById(R.id.mRecyclerView);
+
 
         plantArrayList = new ArrayList<>();
 

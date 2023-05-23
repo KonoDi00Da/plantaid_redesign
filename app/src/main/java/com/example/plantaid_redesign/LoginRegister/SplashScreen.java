@@ -30,8 +30,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SplashScreen extends AppCompatActivity {
-
-
     private static final String TAG = "GetStartedFragment";
     private static final String CHANNEL_ID = "PlantAidReminder";
 
@@ -40,11 +38,10 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        createNotificationChannel();
 
         try{
             animate();
-            createNotificationChannel();
-
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             new Handler().postDelayed(new Runnable() {
                 @Override

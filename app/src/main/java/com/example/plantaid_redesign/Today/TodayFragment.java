@@ -73,6 +73,9 @@ public class TodayFragment extends Fragment {
     private String txtSunrise, txtSunset, txtGeoCoords;
     private NavController navController;
     private String fname, lname, email;
+    private CardView carddNoReminders;
+
+
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -93,11 +96,11 @@ public class TodayFragment extends Fragment {
 
 
 
-    public TodayFragment(){
-        compositeDisposable = new CompositeDisposable();
-        Retrofit retrofit = RetrofitClient.getInstance();
-        mService = retrofit.create(IOpenWeatherMap.class);
-    }
+//    public TodayFragment(){
+//        compositeDisposable = new CompositeDisposable();
+//        Retrofit retrofit = RetrofitClient.getInstance();
+//        mService = retrofit.create(IOpenWeatherMap.class);
+//    }
 
 
     @Override
@@ -105,6 +108,9 @@ public class TodayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
+        compositeDisposable = new CompositeDisposable();
+        Retrofit retrofit = RetrofitClient.getInstance();
+        mService = retrofit.create(IOpenWeatherMap.class);
         ((Home)getActivity()).updateStatusBarColor("#485E0D");
         return view;
     }
@@ -123,6 +129,7 @@ public class TodayFragment extends Fragment {
         txtCondition = view.findViewById(R.id.txtCondition);
         txtDateTime = view.findViewById(R.id.txtDateTime);
         loading = view.findViewById(R.id.progressBar);
+        carddNoReminders = view.findViewById(R.id.carddNoReminders);
         weatherForecastView = view.findViewById(R.id.weatherForecastView);
 //        imgProfile = view.findViewById(R.id.imgProfile);
         txtWelcome = view.findViewById(R.id.txtWelcome);
@@ -140,11 +147,11 @@ public class TodayFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
         try{
+            getWeatherInformation();
             openDrawer();
             greetUser();
             openWeatherForecastFragment();
             setBackgroundImage();
-            getWeatherInformation();
             selectCalendar();
             showReminders();
 
@@ -175,6 +182,7 @@ public class TodayFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
+                    carddNoReminders.setVisibility(View.GONE);//noplants
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         String key = dataSnapshot.getKey();
                         Log.d("Module_today", "onDataChange: 1    " + dataSnapshot.getKey());
@@ -286,10 +294,10 @@ public class TodayFragment extends Fragment {
 
     private void getWeatherInformation() {
         compositeDisposable.add(mService.getWeatherByLatLng(
-                String.valueOf(Common.current_location.getLatitude()),
-                String.valueOf(Common.current_location.getLongitude()),
-                Common.APP_ID,
-                "metric")
+                        String.valueOf(Common.current_location.getLatitude()),
+                        String.valueOf(Common.current_location.getLongitude()),
+                        Common.APP_ID,
+                        "metric")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<WeatherResult>() {

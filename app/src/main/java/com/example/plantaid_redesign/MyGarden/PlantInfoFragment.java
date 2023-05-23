@@ -153,7 +153,6 @@ public class PlantInfoFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String plantID = "myGarden";
                 userRef.child(plantID).child(userKey).removeValue();
-                toast("Plant Deleted");
             }
 
             @Override
@@ -161,6 +160,8 @@ public class PlantInfoFragment extends Fragment {
 
             }
         });
+        toast("Plant Deleted");
+
         Intent intent = new Intent(getActivity(), Home.class);
         intent.putExtra("fragment_id", 1);
         startActivity(intent);

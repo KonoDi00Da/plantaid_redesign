@@ -182,7 +182,6 @@
             <ImageView
                 android:visibility="visible"
                 android:id="@+id/currentWeatherIcon"
-                android:src="@drawable/heavy_rain"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginEnd="30dp"
@@ -255,6 +254,27 @@
             android:fontFamily="@font/merriweather_bold"
             android:textColor="@color/dark_green"
             android:textSize="20sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/carddNoReminders"
+            android:visibility="visible"
+            android:layout_below="@id/relative2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/light_green">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You have no reminders yet :)"
+                android:textColor="@color/frog_green"
+                android:textSize="14sp" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

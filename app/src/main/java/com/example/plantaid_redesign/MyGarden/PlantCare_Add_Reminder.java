@@ -1,8 +1,12 @@
 package com.example.plantaid_redesign.MyGarden;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plantaid_redesign.Model.PlantReminderModel;
 import com.example.plantaid_redesign.R;
+import com.example.plantaid_redesign.Utilities.AlarmReceiver;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -32,103 +37,86 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 public class PlantCare_Add_Reminder extends AppCompatActivity {
     public static final String TAG = "Reminder";
     private Calendar cal;
+
     private TextView txtComPlantName, txtTask, txtCalendarDate, txtTime;
     private EditText edittxtCustomTask;
     private FloatingActionButton btnBack, btnAdd;
+    private Button btnOK, btnCancel;
+    String customTask;
 
-    //firebase
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
-    private FirebaseDatabase database;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    FirebaseDatabase database;
 
-    //calendar
     private int hour, minute;
     private int year, month, day;
-    private int requestCode, notificationID, currentHour,currentMinutes;
-    private String timeFormat,commonName, userKey, task, date, dateFormatted, userTask, customTask;
 
+    int requestCode, notificationID, currentHour,currentMinutes;
+    String eventNameTxt;
 
+    private String timeFormat,commonName, userKey, task, date, dateFormatted,custommTask;
 
-    @TimeFormat private int clockFormat;
+    @TimeFormat  private int clockFormat;
     @Nullable private Integer timeInputMode;
 
 
     private final SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_care_add_reminder);
+//        createNotificationChannel();
         cal = Calendar.getInstance();
+
+        Random random = new Random();
+        requestCode = random.nextInt(9999 - 1000 + 1) + 1000;
+        notificationID = random.nextInt(9999 - 1000 + 1) + 1000;
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
-        btnBack = findViewById(R.id.btnBack);
+
         txtComPlantName = findViewById(R.id.txtComPlantName);
         txtTask = findViewById(R.id.txtTask);
         txtCalendarDate = findViewById(R.id.txtCalendarDate);
         txtTime = findViewById(R.id.txtTime);
         edittxtCustomTask = findViewById(R.id.txtCustomTask);
+        btnBack = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnAdd);
 
-        try {
-            txtComPlantName.setText(getIntent().getStringExtra("plantCommonName"));
-            setCurrentTimeDate();
-            onBack();
-            selectDate();
-            selectTime();
-            setUserTask();
+        String date_ = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        date = new SimpleDateFormat("MMM_dd,_yyyy", Locale.getDefault()).format(new Date());
+        txtCalendarDate.setText(date_);
+        txtCalendarDate.setText(date_);
 
-        } catch (Exception e) {
-            Log.e(TAG, "error", e);
-        }
+        currentHour = cal.get(Calendar.HOUR);
+        hour = currentMinutes;
+        currentMinutes = cal.get(Calendar.MINUTE);
+        minute = currentMinutes;
 
-    }
-    private void addToFirebase(){
-        userKey = getIntent().getStringExtra("userKey");
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat time = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat time_ = new SimpleDateFormat("h:mm_a");
+
+        String currentTime = time.format(calendar.getTime());
+        String currentTime_ = time_.format(calendar.getTime());
+        txtTime.setText(currentTime);
+        timeFormat = currentTime_;
+
+        String userTask = getIntent().getStringExtra("taskReminder");
         commonName = getIntent().getStringExtra("plantCommonName");
-        DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String plantID = "myGarden";
-                String reminders = "plantReminders";
-                String pushKey = userRef.push().getKey();
-                PlantReminderModel plantReminderModel = new PlantReminderModel(commonName,task,date,timeFormat, userKey, pushKey);
-                userRef.child(plantID).child(userKey).child(reminders).child(pushKey).setValue(plantReminderModel);
-                toast("Reminder is now set");
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        userKey = getIntent().getStringExtra("userKey");
 
-            }
-        });
-    }
+        txtComPlantName.setText(commonName);
 
-    private void selectDate() {
-        txtCalendarDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                materialDatePicker();
-            }
-        });
-    }
-    private void selectTime() {
-        txtTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTime();
-            }
-        });
-    }
-
-    public void setUserTask(){
-        userTask = getIntent().getStringExtra("taskReminder");
+        clockFormat = TimeFormat.CLOCK_12H;
 
         if(userTask.equals("Custom")){
             edittxtCustomTask.setVisibility(View.VISIBLE);
@@ -136,6 +124,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     customTask = edittxtCustomTask.getText().toString().trim();
+                    custommTask = "custom";
                     task = customTask;
                     if (customTask.isEmpty()) {
                         customTask = edittxtCustomTask.getText().toString().trim();
@@ -148,6 +137,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                 }
             });
         }else{
+            custommTask = "nope";
             task = userTask;
             txtTask.setText(task);
             txtTask.setVisibility(View.VISIBLE);
@@ -156,28 +146,60 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     addToFirebase();
-//                    setNotification();
+                    setNotification();
                     finish();
                 }
             });
         }
 
-    }
-
-
-
-
-    public void onBack(){
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onBackPressed();
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        txtCalendarDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDatePicker();
+            }
+        });
+
+        txtTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime();
             }
         });
     }
 
-    private void materialDatePicker()
-    {
+    private void addToFirebase() {
+        try{
+            DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String plantID = "myGarden";
+                    String reminders = "plantReminders";
+                    String pushKey = userRef.push().getKey();
+                    PlantReminderModel plantReminderModel = new PlantReminderModel(commonName,task,date,timeFormat, userKey, pushKey);
+                    userRef.child(plantID).child(userKey).child(reminders).child(pushKey).setValue(plantReminderModel);
+                    toast("Reminder is now set");
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }catch (Exception e){
+            toast("Something went wrong, please try again");
+            Log.e("SaveReminder", "exception", e);
+        }
+    }
+
+
+    private void materialDatePicker(){
         CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder().setValidator(DateValidatorPointForward.now());
 
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraintBuilder.build());
@@ -201,26 +223,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         });
     }
 
-    private void setCurrentTimeDate(){
-        String date_ = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        date = new SimpleDateFormat("MMM_dd,_yyyy", Locale.getDefault()).format(new Date());
-        txtCalendarDate.setText(date_);
-        txtCalendarDate.setText(date_);
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat time = new SimpleDateFormat("h:mm a");
-        SimpleDateFormat time_ = new SimpleDateFormat("h:mm_a");
-
-
-        String currentTime = time.format(calendar.getTime());
-        String currentTime_ = time_.format(calendar.getTime());
-        txtTime.setText(currentTime);
-        timeFormat = currentTime_;
-    }
-
     private void setTime() {
-        clockFormat = TimeFormat.CLOCK_12H;
-
         MaterialTimePicker.Builder materialTimePickerBuilder = new MaterialTimePicker.Builder()
                 .setTimeFormat(clockFormat)
                 .setHour(currentHour)
@@ -248,12 +251,49 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         cal.set(Calendar.HOUR_OF_DAY, newHour);
         cal.set(Calendar.MINUTE, newMinute);
         cal.setLenient(false);
-        String time = formatter.format(cal.getTime());
 
+        String time = formatter.format(cal.getTime());
         timeFormat = time.replace(" ","_");
-        txtTime.setText(timeFormat);
+        txtTime.setText(time);
         hour = newHour;
         minute = newMinute;
+    }
+
+
+    private void setNotification(){
+
+        //set notification id and text
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("requestCode", requestCode);
+        intent.putExtra("plantName", commonName);
+        intent.putExtra("notificationID", notificationID);
+        intent.putExtra("title", "PlantAid Reminder");
+        intent.putExtra("customTask", custommTask);
+        intent.putExtra("task", task);
+        intent.putExtra("delete", "null");
+
+        //getBroadcast context, requestCode, intent, flags
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(PlantCare_Add_Reminder.this,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_MUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        //Create time
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, hour);
+        startTime.set(Calendar.MINUTE, minute);
+        startTime.set(Calendar.SECOND, 0);
+
+        startTime.set(Calendar.MONTH, month);
+        startTime.set(Calendar.DAY_OF_MONTH, day);
+        startTime.set(Calendar.YEAR, year);
+
+
+        //set alarm
+        //set type millisecond, intent
+        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime.getTimeInMillis(), pendingIntent);
+        toast("Notification set");
     }
 
     private void toast(String message){

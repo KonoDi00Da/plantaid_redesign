@@ -83,6 +83,7 @@ public class PlantCareFragment extends Fragment {
         }
     }
 
+
     public void showPlantReminders(){
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("myGarden").child(userKey)
                 .child("plantReminders");

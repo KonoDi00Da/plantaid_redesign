@@ -128,7 +128,7 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    private void buildLocationCallback() {
+    public void buildLocationCallback() {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
@@ -141,7 +141,7 @@ public class Home extends AppCompatActivity {
         };
     }
 
-    private void buildLocationRequest() {
+    public void buildLocationRequest() {
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(5000);
@@ -226,8 +226,10 @@ public class Home extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         if(MyGardenFragment.backpressedlistener !=null){
             MyGardenFragment.backpressedlistener.onBackPressed();
+
         } else if(WeatherForecastFragment.backpressedlistener !=null){
             WeatherForecastFragment.backpressedlistener.onBackPressed();
         } else if(MyGardenAllPlantsFragment.backpressedlistener !=null){

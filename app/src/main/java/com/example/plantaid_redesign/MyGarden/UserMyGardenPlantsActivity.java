@@ -19,7 +19,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.plantaid_redesign.Adapter.MyGardenTabLayoutAdapter;
 import com.example.plantaid_redesign.Adapter.TabLayoutAdapter;
 import com.example.plantaid_redesign.R;
+import com.example.plantaid_redesign.Today.Home;
 import com.example.plantaid_redesign.Today.WeatherForecastFragment;
+import com.example.plantaid_redesign.Utilities.BackpressedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
@@ -51,7 +53,7 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -124,8 +126,6 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
         }
     }
 
-
-
     public String getPlantKey() {
         return plantKey;
     }
@@ -136,5 +136,11 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
 
     public String getCommonName() { return commonName; }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Home.class);
+        intent.putExtra("fragment_id", 1);
+        startActivity(intent);
+    }
 }
