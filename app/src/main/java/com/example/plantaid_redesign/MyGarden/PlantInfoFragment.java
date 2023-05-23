@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plantaid_redesign.Model.AllPlantsList;
+import com.example.plantaid_redesign.Model.PlantReminderModel;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
 import com.github.hariprasanths.bounceview.BounceView;
@@ -34,7 +35,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Collections;
 
 public class PlantInfoFragment extends Fragment {
     public String key;
@@ -51,6 +55,8 @@ public class PlantInfoFragment extends Fragment {
 
     private String userKey;
     private String plantKey;
+
+    private String commonName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +104,7 @@ public class PlantInfoFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     AllPlantsList model = snapshot.getValue(AllPlantsList.class);
                     if (model != null){
+                        commonName = model.getCommonName();
                         commonNameTextView.setText(model.getCommonName());
                         sciNameTextView.setText(model.getSciName());
                         descriptionTextView.setText(model.getDescription());
@@ -148,10 +155,46 @@ public class PlantInfoFragment extends Fragment {
 
     private void deletePlant() {
         DatabaseReference userRef = database.getReference().child("MyGarden").child(currentUser.getUid()).child(userKey);
+        DatabaseReference ref1 = database.getReference().child("PlantReminders").child(currentUser.getUid());
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userRef.removeValue();
+                ref1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
+                                if(plantReminders != null){
+                                    String reminderKey = plantReminders.reminderKey;
+                                    Query query = ref1.child(reminderKey).orderByChild("plantName").equalTo(commonName);
+
+                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            dataSnapshot.getRef().removeValue();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            // Handle any potential errors
+                                        }
+                                    });
+                                }
+
+                            }
+                            userRef.removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             }
 
             @Override

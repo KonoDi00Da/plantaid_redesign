@@ -69,6 +69,8 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
     private FirebaseDatabase database;
 
     private String reminder_key, plant_name, oldTime, oldReminder, oldDate, user_key, requestCode, notificationID;
+
+    public static String reminderKey;
     private String newTime, newReminder,newDate;
     private int year, month, day;
     private int hour, minute;
@@ -115,6 +117,10 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, "error", e);
         }
+    }
+
+    public static String getReminderKey(){
+        return reminderKey;
     }
 
     private void setUserTask() {
