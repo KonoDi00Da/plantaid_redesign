@@ -1,19 +1,37 @@
 package com.example.plantaid_redesign.Model;
 
 public class PlantReminderModel {
-    public String plantName, reminderType, date, time, userKey, reminderKey;
+    public String plantName, reminderType, date, time, userKey, reminderKey, notificationID, requestCode;
 
     public PlantReminderModel(){
 
     }
 
-    public PlantReminderModel(String plantName, String reminderType, String date, String time, String userKey, String reminderKey) {
+    public PlantReminderModel(String plantName, String reminderType, String date, String time, String userKey, String reminderKey, String notificationID, String requestCode) {
         this.plantName = plantName;
         this.reminderType = reminderType;
         this.date = date;
         this.time = time;
         this.userKey = userKey;
         this.reminderKey = reminderKey;
+        this.notificationID = notificationID;
+        this.requestCode = requestCode;
+    }
+
+    public String getNotificationID() {
+        return notificationID;
+    }
+
+    public void setNotificationID(String notificationID) {
+        this.notificationID = notificationID;
+    }
+
+    public String getRequestCode() {
+        return requestCode;
+    }
+
+    public void setRequestCode(String requestCode) {
+        this.requestCode = requestCode;
     }
 
     public String getUserKey() {

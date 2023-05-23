@@ -176,26 +176,16 @@ public class TodayFragment extends Fragment {
 
 
     public void showReminders(){
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("myGarden");
-        databaseReference.child("Users").keepSynced(true);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("PlantReminders").child(currentUser.getUid());
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    carddNoReminders.setVisibility(View.GONE);//noplants
+                    carddNoReminders.setVisibility(View.GONE);//no plants
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                        String key = dataSnapshot.getKey();
-                        Log.d("Module_today", "onDataChange: 1    " + dataSnapshot.getKey());
-                        for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()){
-                            Log.d("Module_today", "onDataChange: 2    " + dataSnapshot2.getKey());
-                            for (DataSnapshot dataSnapshot3 : dataSnapshot2.getChildren()){
-                                Log.d("Module_today", "onDataChange: 3    " + dataSnapshot3.getKey());
-                                PlantReminderModel plantReminders = dataSnapshot3.getValue(PlantReminderModel.class);
-                                list.add(plantReminders);
-
-
-                            }
-                        }
+                        PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
+                        list.add(plantReminders);
                     }
                     cAdapter.notifyDataSetChanged();
                 }

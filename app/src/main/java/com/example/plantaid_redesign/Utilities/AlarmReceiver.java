@@ -76,11 +76,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
             //notify
 
-            if(del.equals("delete")){
-                notificationManager.cancel(notificationID);
-            } else {
-                notificationManager.notify(notificationID, builder.build());
-            }
+            notificationManager.notify(notificationID, builder.build());
         }catch(Exception e){
             Log.e(TAG,"error",e);
         }

@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plantaid_redesign.Model.PlantReminderModel;
 import com.example.plantaid_redesign.R;
+import com.example.plantaid_redesign.Utilities.DateUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ReminderPlantAll_Adapter extends RecyclerView.Adapter<ReminderPlantAll_Adapter.MyViewHolder> {
@@ -39,8 +42,8 @@ public class ReminderPlantAll_Adapter extends RecyclerView.Adapter<ReminderPlant
 
         holder.txtPlantTask.setText(model.getReminderType());
         holder.txtPlantName.setText(model.getPlantName());
-        holder.txtTime.setText(model.getTime().replace("_"," "));
-        holder.txtDate.setText(model.getDate().replace("_"," "));
+        holder.txtTime.setText(DateUtils.formattedTime(LocalTime.parse(model.getTime())));
+        holder.txtDate.setText(DateUtils.formattedDate(LocalDate.parse(model.getDate())));
 
     }
 

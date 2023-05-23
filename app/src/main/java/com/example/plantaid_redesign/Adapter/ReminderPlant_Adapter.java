@@ -59,6 +59,8 @@ public class ReminderPlant_Adapter extends RecyclerView.Adapter<ReminderPlant_Ad
                 intent.putExtra("date",model.getDate());
                 intent.putExtra("user_Key",model.getUserKey());
                 intent.putExtra("reminder_key",model.getReminderKey());
+                intent.putExtra("notificationID", model.getNotificationID());
+                intent.putExtra("requestCode", model.getRequestCode());
                 context.startActivity(intent);
             }
         });
