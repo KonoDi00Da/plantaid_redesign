@@ -21,6 +21,9 @@ import com.example.plantaid_redesign.Model.PlantReminderModel;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
 import com.github.hariprasanths.bounceview.BounceView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -107,8 +110,15 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                     return;
                 }
                 addToFirebase();
-                finish();
-
+                Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
+                //intent.putExtra("plant_image", model.getImage());
+                intent.putExtra("commonName", plant_name);
+                intent.putExtra("userKey", user_key);
+                intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
+                intent.putExtra("page", "1");
+                intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
@@ -165,23 +175,22 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         });
     }
     private void addToFirebase() {
-        DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference userRef = database.getReference().child("PlantReminders").child(currentUser.getUid());
+        PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name,newReminder,newDate,newTime, user_key, reminder_key);
+        userRef.child(reminder_key).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String plantID = "myGarden";
-                String reminders = "plantReminders";
-                PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name,newReminder,newDate,newTime, user_key, reminder_key);
-                userRef.child(plantID).child(user_key).child(reminders).child(reminder_key).setValue(plantReminderModel);
-
+            public void onComplete(@NonNull Task<Void> task) {
+                toast("Reminder has been edited");
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: ", e);
+                toast("Something went wrong");
             }
         });
-        toast("Reminder has been edited");
+
+
     }
     private void selectDate() {
         editCalendarDate.setOnClickListener(new View.OnClickListener() {
@@ -254,12 +263,12 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
     }
 
     private void deleteReminder() {
-        DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
+        DatabaseReference userRef = database.getReference().child("PlantReminders").child(currentUser.getUid()).child(reminder_key);
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String plantID = "myGarden";
-                userRef.child(plantID).child(user_key).child("plantReminders").child(reminder_key).removeValue();
+
+                userRef.removeValue();
                 toast("Reminder Deleted");
             }
 

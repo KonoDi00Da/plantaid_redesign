@@ -35,6 +35,9 @@ import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
 import com.example.plantaid_redesign.Utilities.BackpressedListener;
 import com.github.hariprasanths.bounceview.BounceView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,6 +62,8 @@ public class MyGardenPlantsDetails extends Fragment implements BackpressedListen
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private FirebaseDatabase database;
+
+    private DatabaseReference userRef;
 
     private String VideoEmbededAdress, ytEmbedKey;
     private final String mimeType = "text/html";
@@ -93,6 +98,7 @@ public class MyGardenPlantsDetails extends Fragment implements BackpressedListen
             mAuth = FirebaseAuth.getInstance();
             currentUser = mAuth.getCurrentUser();
             database = FirebaseDatabase.getInstance();
+            userRef = database.getReference().child("MyGarden").child(currentUser.getUid());
 
             btn_back.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,26 +119,25 @@ public class MyGardenPlantsDetails extends Fragment implements BackpressedListen
             @Override
             public void onClick(View v) {
 
-                DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
-                userRef.addListenerForSingleValueEvent( new ValueEventListener() {
+                String userPlantKey = userRef.push().getKey();
+                User_Plants userPlants = new User_Plants(comPlant, sciPlant, image, key, userPlantKey);
+
+                userRef.child(userPlantKey).setValue(userPlants).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //get date added
-                        String plantID = "myGarden";
-                        String userPlantKey = userRef.push().getKey();
-                        User_Plants userPlants = new User_Plants(comPlant, sciPlant, image, key, userPlantKey);
-                        userRef.child(plantID).child(userPlantKey).setValue(userPlants);
+                    public void onComplete(@NonNull Task<Void> task) {
+                        toast("Plant added successfully");
+                        navController.navigate(R.id.action_myGardenPlantsDetails_to_myGardenFragment);
+                        ((Home)getActivity()).hideBottomNavigation(false);
                     }
-
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    public void onFailure(@NonNull Exception e) {
+                        toast("Something went wrong");
+                        Log.e(TAG, "onFailure: ", e);
                     }
                 });
-                toast("Plant added successfully");
 
-                navController.navigate(R.id.action_myGardenPlantsDetails_to_myGardenFragment);
-                ((Home)getActivity()).hideBottomNavigation(false);
+
             }
         });
 

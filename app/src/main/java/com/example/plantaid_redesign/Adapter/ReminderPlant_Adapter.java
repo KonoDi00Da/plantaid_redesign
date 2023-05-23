@@ -35,6 +35,7 @@ public class ReminderPlant_Adapter extends RecyclerView.Adapter<ReminderPlant_Ad
         return new ReminderPlant_Adapter.MyViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ReminderPlant_Adapter.MyViewHolder holder, int position) {
         //assigning the values to the recyclerview

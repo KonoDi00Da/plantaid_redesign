@@ -35,7 +35,10 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private MyGardenTabLayoutAdapter myGardenTabLayoutAdapter;
     private FloatingActionButton btn_back;
-    public String plantKey, userKey, commonName;
+    public String userKey, commonName, page;
+
+    public static String plantKey;
+    public static String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
         plantKey = intent.getStringExtra("plantKey");
         userKey = intent.getStringExtra("userKey");
         commonName = intent.getStringExtra("commonName");
+        image = intent.getStringExtra("plant_image");
+        page = intent.getStringExtra("page");
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +82,11 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
             myGardenTabLayoutAdapter = new MyGardenTabLayoutAdapter(this);
             viewPager2.setAdapter(myGardenTabLayoutAdapter);
 
-
+            if(page != null){
+                int pageInt = Integer.parseInt(page);
+                viewPager2.setCurrentItem(pageInt);
+                tabLayout.getTabAt(pageInt).select();
+            }
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
@@ -103,10 +112,12 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
                 }
             });
 
+
             Bundle bundle = new Bundle();
             bundle.putString("plantKey", plantKey);
             bundle.putString("userKey", userKey);
             bundle.putString("commonName", commonName);
+
             PlantCareFragment fragInfo = new PlantCareFragment();
             fragInfo.setArguments(bundle);
 
@@ -124,6 +135,14 @@ public class UserMyGardenPlantsActivity extends AppCompatActivity {
             tabLayout.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public static String getImage() {
+        return image;
+    }
+
+    public static String getPlantKeyStatic(){
+        return plantKey;
     }
 
     public String getPlantKey() {

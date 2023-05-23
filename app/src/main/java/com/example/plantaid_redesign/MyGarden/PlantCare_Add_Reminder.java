@@ -18,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.plantaid_redesign.Model.PlantReminderModel;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Utilities.AlarmReceiver;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -64,7 +67,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
     @TimeFormat  private int clockFormat;
     @Nullable private Integer timeInputMode;
 
-
+    private DatabaseReference userRef;
     private final SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
 
@@ -82,6 +85,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
+        userRef = database.getReference().child("PlantReminders").child(currentUser.getUid());
 
         txtComPlantName = findViewById(R.id.txtComPlantName);
         txtTask = findViewById(R.id.txtTask);
@@ -133,7 +137,15 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                         return;
                     }
                     addToFirebase();
-                    finish();
+                    Intent intent = new Intent(PlantCare_Add_Reminder.this, UserMyGardenPlantsActivity.class);
+                    //intent.putExtra("plant_image", model.getImage());
+                    intent.putExtra("commonName", commonName);
+                    intent.putExtra("userKey", userKey);
+                    intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
+                    intent.putExtra("page", "1");
+                    intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             });
         }else{
@@ -147,7 +159,15 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                 public void onClick(View v) {
                     addToFirebase();
                     setNotification();
-                    finish();
+                    Intent intent = new Intent(PlantCare_Add_Reminder.this, UserMyGardenPlantsActivity.class);
+                    //intent.putExtra("plant_image", model.getImage());
+                    intent.putExtra("commonName", commonName);
+                    intent.putExtra("userKey", userKey);
+                    intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
+                    intent.putExtra("page", "1");
+                    intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             });
         }
@@ -176,20 +196,19 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
 
     private void addToFirebase() {
         try{
-            DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
-            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            String pushKey = userRef.push().getKey();
+            PlantReminderModel plantReminderModel = new PlantReminderModel(commonName,task,date,timeFormat, userKey, pushKey);
+
+            userRef.child(pushKey).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String plantID = "myGarden";
-                    String reminders = "plantReminders";
-                    String pushKey = userRef.push().getKey();
-                    PlantReminderModel plantReminderModel = new PlantReminderModel(commonName,task,date,timeFormat, userKey, pushKey);
-                    userRef.child(plantID).child(userKey).child(reminders).child(pushKey).setValue(plantReminderModel);
+                public void onComplete(@NonNull Task<Void> task) {
                     toast("Reminder is now set");
                 }
+            }).addOnFailureListener(new OnFailureListener() {
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
+                public void onFailure(@NonNull Exception e) {
+                    toast("Something went wrong");
+                    Log.e(TAG, "onComplete: ", e);
                 }
             });
         }catch (Exception e){

@@ -147,12 +147,11 @@ public class PlantInfoFragment extends Fragment {
     }
 
     private void deletePlant() {
-        DatabaseReference userRef = database.getReference("Users").child(currentUser.getUid());
+        DatabaseReference userRef = database.getReference().child("MyGarden").child(currentUser.getUid()).child(userKey);
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String plantID = "myGarden";
-                userRef.child(plantID).child(userKey).removeValue();
+                userRef.removeValue();
             }
 
             @Override

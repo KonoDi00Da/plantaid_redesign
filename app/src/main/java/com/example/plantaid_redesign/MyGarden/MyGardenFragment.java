@@ -92,17 +92,20 @@ public class  MyGardenFragment extends Fragment implements BackpressedListener{
         recyclerView.setAdapter(recyclerAdapter);
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("myGarden");
-        databaseReference.child("Users").keepSynced(true);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MyGarden").child(currentUser.getUid());
+        //databaseReference.child("Users").keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     cardNoPlants.setVisibility(View.GONE);//noplants
+                    User_Plants userPlants = new User_Plants();
+
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                        User_Plants userPlants = dataSnapshot.getValue(User_Plants.class);
+                        userPlants = dataSnapshot.getValue(User_Plants.class);
                         list.add(userPlants);
                     }
+
                     recyclerAdapter.notifyDataSetChanged();
                 }
 
@@ -112,6 +115,7 @@ public class  MyGardenFragment extends Fragment implements BackpressedListener{
                 toast("Error");
 
             }
+
         });
     }
 

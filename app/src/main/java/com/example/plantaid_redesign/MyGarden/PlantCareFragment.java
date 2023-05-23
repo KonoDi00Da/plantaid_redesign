@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class PlantCareFragment extends Fragment {
     public static final String TAG = "MyGarden";
@@ -85,10 +87,9 @@ public class PlantCareFragment extends Fragment {
 
 
     public void showPlantReminders(){
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("myGarden").child(userKey)
-                .child("plantReminders");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("PlantReminders").child(currentUser.getUid());
 //            databaseReference.child("Users").keepSynced(true);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -96,6 +97,7 @@ public class PlantCareFragment extends Fragment {
                         PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
                         list.add(plantReminders);
                     }
+                    Collections.reverse(list);
                     cAdapter.notifyDataSetChanged();
                 }
             }
