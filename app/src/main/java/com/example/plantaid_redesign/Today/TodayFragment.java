@@ -178,7 +178,7 @@ public class TodayFragment extends Fragment {
     public void showReminders(){
         databaseReference = FirebaseDatabase.getInstance().getReference().child("PlantReminders").child(currentUser.getUid());
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
