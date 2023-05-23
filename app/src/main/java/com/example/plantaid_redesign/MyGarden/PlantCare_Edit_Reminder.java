@@ -49,6 +49,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
 
 import static com.example.plantaid_redesign.Utilities.DateUtils.formatDate;
 import static com.example.plantaid_redesign.Utilities.DateUtils.formattedDate;
@@ -261,6 +262,57 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         });
     }
 
+    private void cancelNotification(){
+
+        if (month == 0 && day == 0 && year == 0){
+            year = localDateToCalendar(selectedDate).get(Calendar.YEAR);
+            month = localDateToCalendar(selectedDate).get(Calendar.MONTH);
+            day = localDateToCalendar(selectedDate).get(Calendar.DAY_OF_MONTH);
+        }
+
+        if (hour == 0 && minute == 0){
+            hour = time.getHour();
+            minute = time.getMinute();
+        }
+
+        Random random = new Random();
+        int newRequestCode = random.nextInt(9999 - 1000 + 1) + 1000;
+
+        //set notification id and text
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("requestCode", Integer.parseInt(requestCode));
+        intent.putExtra("plantName", plant_name);
+        intent.putExtra("notificationID", Integer.parseInt(notificationID));
+        intent.putExtra("title", "PlantAid Reminder");
+        intent.putExtra("customTask", oldReminder);
+        intent.putExtra("task", task);
+        intent.putExtra("delete", "null");
+
+        //getBroadcast context, requestCode, intent, flags
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this,
+                Integer.parseInt(requestCode),
+                intent,
+                PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+
+        //Create time
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, hour);
+        startTime.set(Calendar.MINUTE, minute);
+        startTime.set(Calendar.SECOND, 0);
+
+        startTime.set(Calendar.MONTH, month);
+        startTime.set(Calendar.DAY_OF_MONTH, day);
+        startTime.set(Calendar.YEAR, year);
+
+        long alarmStart = startTime.getTimeInMillis();
+
+        //set alarm
+        //set type millisecond, intent
+        alarmManager.cancel(alarmIntent);
+        toast("Reminder cancelled");
+    }
+
     private void setNotification(){
         if (month == 0 && day == 0 && year == 0){
             year = localDateToCalendar(selectedDate).get(Calendar.YEAR);
@@ -352,7 +404,17 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 userRef.removeValue();
-                toast("Reminder Deleted");
+                cancelNotification();
+                Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
+                //intent.putExtra("plant_image", model.getImage());
+                intent.putExtra("commonName", plant_name);
+                intent.putExtra("userKey", user_key);
+                intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
+                intent.putExtra("page", "1");
+                intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
             }
 
             @Override
@@ -360,7 +422,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
 
             }
         });
-        finish();
     }
 
     private void toast(String message){
