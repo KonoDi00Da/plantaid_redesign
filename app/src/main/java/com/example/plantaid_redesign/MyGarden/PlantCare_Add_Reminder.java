@@ -37,15 +37,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.example.plantaid_redesign.Utilities.DateUtils.formatDate;
 import static com.example.plantaid_redesign.Utilities.DateUtils.formattedDate;
 import static com.example.plantaid_redesign.Utilities.DateUtils.formattedTime;
+import static com.example.plantaid_redesign.Utilities.DateUtils.localDateToCalendar;
 import static com.example.plantaid_redesign.Utilities.DateUtils.selectedDate;
 
 public class PlantCare_Add_Reminder extends AppCompatActivity {
@@ -232,22 +236,26 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder().setValidator(DateValidatorPointForward.now());
 
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraintBuilder.build());
-        builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+        builder.setSelection(selectedDate.toEpochDay() * 24 * 60 * 60 * 1000);
         final MaterialDatePicker materialDatePicker = builder.build();
         materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
 
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
-                date = materialDatePicker.getHeaderText().replace(" ","_");
-                String selectedDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).toString();
-                cal.setTimeInMillis((Long) selection);
-                year = cal.get(Calendar.YEAR);
-                month = cal.get(Calendar.MONTH) + 1;
-                day = cal.get(Calendar.DAY_OF_MONTH);
+                Instant instant = Instant.ofEpochMilli((Long) selection);
+                selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                txtCalendarDate.setText(formatDate(selectedDate));
 
-                toast("Date Selected: " + year + month + day);
-                txtCalendarDate.setText(materialDatePicker.getHeaderText());
+                date = materialDatePicker.getHeaderText().replace(" ","_");
+                //String selectedDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).toString();
+                cal.setTimeInMillis((Long) selection);
+                year = localDateToCalendar(selectedDate).get(Calendar.YEAR);
+                month = localDateToCalendar(selectedDate).get(Calendar.MONTH);
+                day = localDateToCalendar(selectedDate).get(Calendar.DAY_OF_MONTH);
+
+                toast("Date Selected: " + String.valueOf(selectedDate));
+                //txtCalendarDate.setText(materialDatePicker.getHeaderText());
             }
         });
     }
