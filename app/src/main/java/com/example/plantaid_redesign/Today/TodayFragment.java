@@ -147,9 +147,9 @@ public class TodayFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
         try{
+            greetUser();
             getWeatherInformation();
             openDrawer();
-            greetUser();
             openWeatherForecastFragment();
             setBackgroundImage();
             selectCalendar();
