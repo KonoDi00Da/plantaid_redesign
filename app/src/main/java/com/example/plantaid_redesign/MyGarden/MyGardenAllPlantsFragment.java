@@ -85,7 +85,7 @@ public class MyGardenAllPlantsFragment extends Fragment implements  BackpressedL
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Plants");
-        databaseReference.child("Plants").keepSynced(true);
+        databaseReference.child("Plants").keepSynced(false);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

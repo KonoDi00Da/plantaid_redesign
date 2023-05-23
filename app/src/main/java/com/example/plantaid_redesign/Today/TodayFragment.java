@@ -211,7 +211,7 @@ public class TodayFragment extends Fragment {
 
 
     public void selectCalendar(){
-        
+
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDaySelect() {
@@ -361,23 +361,6 @@ public class TodayFragment extends Fragment {
         }
     }
 
-//    private void logoutUser() {
-//        try{
-//            imgProfile.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    FirebaseAuth.getInstance().signOut();
-//                    Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
-//                    startActivity(intent);
-//                    getActivity().finish();
-//                }
-//            });
-//
-//        } catch (Exception e){
-//            toast("Something went wrong, please try again");
-//            Log.e("Logout error", "exception", e);
-//        }
-//    }
     private void toast(String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }

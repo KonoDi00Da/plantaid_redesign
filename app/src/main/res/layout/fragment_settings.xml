@@ -81,7 +81,7 @@
                 android:id="@+id/termsUse"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Terms of Use"
+                android:text="Terms of Agreement"
                 android:paddingStart="30dp"
                 android:textAlignment="textStart"
                 android:layout_marginStart="30dp"
