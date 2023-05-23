@@ -211,7 +211,13 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
     private void addToFirebase() {
         try{
             String pushKey = userRef.push().getKey();
-            PlantReminderModel plantReminderModel = new PlantReminderModel(commonName,task,date,timeFormat, userKey, pushKey);
+            PlantReminderModel plantReminderModel = new PlantReminderModel(
+                    commonName,
+                    task,
+                    String.valueOf(selectedDate),
+                    String.valueOf(time),
+                    userKey,
+                    pushKey);
 
             userRef.child(pushKey).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -299,6 +305,18 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
 
 
     private void setNotification(){
+        if (month == 0 && day == 0 && year == 0){
+            year = localDateToCalendar(selectedDate).get(Calendar.YEAR);
+            month = localDateToCalendar(selectedDate).get(Calendar.MONTH);
+            day = localDateToCalendar(selectedDate).get(Calendar.DAY_OF_MONTH);
+        }
+
+        if (hour == 0 && minute == 0){
+            hour = time.getHour();
+            minute = time.getMinute();
+        }
+
+
         //set notification id and text
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("requestCode", requestCode);
@@ -313,7 +331,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(PlantCare_Add_Reminder.this,
                 requestCode,
                 intent,
-                PendingIntent.FLAG_MUTABLE);
+                PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         //Create time

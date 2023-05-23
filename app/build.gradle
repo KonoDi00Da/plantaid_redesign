@@ -6,6 +6,7 @@ plugins {
 android {
     namespace 'com.example.plantaid_redesign'
     compileSdk 33
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.example.plantaid_redesign"

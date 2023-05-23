@@ -11,6 +11,7 @@ import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.plantaid_redesign.LoginRegister.SplashScreen;
@@ -54,7 +55,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             //Prepare notification
-            Notification.Builder builder = new Notification.Builder(context);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             builder.setSmallIcon(R.mipmap.plantaid_logo_round)
                     .setContentTitle(plantName)
                     .setContentText(message)
