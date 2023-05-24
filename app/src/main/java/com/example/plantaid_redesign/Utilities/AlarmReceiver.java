@@ -1,5 +1,6 @@
 package com.example.plantaid_redesign.Utilities;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -21,6 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "alarm";
     private static final String CHANNEL_ID = "SAMPLE_CHANNEL";
 
+    @SuppressLint("MissingPermission")
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -47,11 +49,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             //When notification is tapped call main activity
             Intent main = new Intent(context, SplashScreen.class);
+            main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
 
             PendingIntent contentIntent = PendingIntent.getActivity(context,
                     requestCode,
                     main,
-                    PendingIntent.FLAG_MUTABLE);
+                    PendingIntent.FLAG_IMMUTABLE);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             //Prepare notification
@@ -68,7 +72,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
                 //for api 26 and above
                 CharSequence channel_name = "My Notification";
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                int importance = NotificationManager.IMPORTANCE_HIGH;
 
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channel_name, importance);
                 notificationManager.createNotificationChannel(channel);

@@ -38,11 +38,12 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        createNotificationChannel();
+
 
         try{
+            createNotificationChannel();
             animate();
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -52,6 +53,7 @@ public class SplashScreen extends AppCompatActivity {
                     if(firebaseUser != null && firebaseUser.isEmailVerified()){
                         Intent intent = new Intent(SplashScreen.this, Home.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
                     }else {
