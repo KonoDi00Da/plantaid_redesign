@@ -38,7 +38,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PlantInfoFragment extends Fragment {
     public String key;
@@ -48,6 +50,8 @@ public class PlantInfoFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private FirebaseDatabase database;
+
+    private List<String> reminderKeyList = new ArrayList<>();
 
     private String VideoEmbededAdress;
     private final String mimeType = "text/html";
@@ -161,7 +165,6 @@ public class PlantInfoFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userRef.removeValue();
-
             }
 
             @Override
@@ -169,39 +172,25 @@ public class PlantInfoFragment extends Fragment {
 
             }
         });
-// eto yung nag ttriger ng pagkaka add ay deleted agad
-//        ref1.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
-//                        if (plantReminders != null) {
-//                            String reminderKey = plantReminders.reminderKey;
-//                            Query query = ref1.child(reminderKey).orderByChild("plantName").equalTo(commonName);
-//                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    dataSnapshot.getRef().removeValue();
-//                                    // Move userRef.removeValue() here
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                                    // Handle any potential errors
-//                                }
-//                            });
-//                        }
-//                    }
-//                    // Remove userRef.removeValue() from here
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+
+        ref1.orderByChild("userKey").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        PlantReminderModel plantReminders = dataSnapshot.getValue(PlantReminderModel.class);
+                        if(userKey.equals(plantReminders.getUserKey())){
+                            ref1.child(plantReminders.getReminderKey()).removeValue();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                toast("Error");
+
+            }
+        });
 
         toast("Plant Deleted");
 
