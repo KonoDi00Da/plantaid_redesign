@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,8 +21,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -30,6 +34,7 @@ import com.example.plantaid_redesign.Identify.IdentifyFragment;
 import com.example.plantaid_redesign.Identify.IdentifyHistoryFragment;
 import com.example.plantaid_redesign.Identify.IdentifyMoreInfoFragment;
 import com.example.plantaid_redesign.Identify.IdentifyResultsFragment;
+import com.example.plantaid_redesign.LoginRegister.LoginRegisterActivity;
 import com.example.plantaid_redesign.MyGarden.MyGardenAllPlantsFragment;
 import com.example.plantaid_redesign.MyGarden.MyGardenContainerFragment;
 import com.example.plantaid_redesign.MyGarden.MyGardenFragment;
@@ -90,15 +95,7 @@ public class Home extends AppCompatActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                             if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                if(Common.current_location!= null){
-                                    buildLocationCallback();
-                                }else{
-                                    home();
-                                    buildLocationRequest();
-                                    buildLocationCallback();
-                                }
-
-
+                                showDialog();
                                 if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                                     return;
                                 }
@@ -129,6 +126,27 @@ public class Home extends AppCompatActivity {
                     Log.d("Location", locationResult.getLastLocation().getLatitude() + "/" + locationResult.getLastLocation().getLongitude());
             }
         };
+    }
+
+    private void showDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.cardview_location_services);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
+        buildLocationRequest();
+        buildLocationCallback();
+        home();
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 
