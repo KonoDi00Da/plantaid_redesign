@@ -140,7 +140,6 @@ public class TodayFragment extends Fragment {
         cAdapter = new ReminderPlantAll_Adapter(list, getActivity());
         recyclerView.setAdapter(cAdapter);
 
-
         //Initialize firebase
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -177,7 +176,6 @@ public class TodayFragment extends Fragment {
 
     public void showReminders(){
         databaseReference = FirebaseDatabase.getInstance().getReference().child("PlantReminders").child(currentUser.getUid());
-
         databaseReference.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

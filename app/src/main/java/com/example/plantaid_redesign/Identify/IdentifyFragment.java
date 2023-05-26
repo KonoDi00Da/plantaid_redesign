@@ -433,7 +433,9 @@ public class IdentifyFragment extends Fragment implements BackpressedListener {
                             url = model.getIdImage();
                             loadingDialog.stopLoading();
 //                            toast("Plant added successfully");
-                            identifyOrgan();
+                            if(getActivity()!=null){
+                                identifyOrgan();
+                            }
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {

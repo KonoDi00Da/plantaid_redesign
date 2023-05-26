@@ -72,7 +72,7 @@ Christian Javen Orante
 
     <!-- Strings used for Terms of Use -->
 
-    <string name="t1">Thank you for visiting the PlantAid application. Your use of this application and all Content on it (including, without limitation, any information, materials, documents, texts, images, photographs, video clips, directories, files, databases, listings, services, and/or mechanisms) is subject to the legally binding terms and conditions that are forth below (the \"Terms\").</string>
+    <string name="t1">\t   Thank you for visiting the PlantAid application. Your use of this application and all Content on it (including, without limitation, any information, materials, documents, texts, images, photographs, video clips, directories, files, databases, listings, services, and/or mechanisms) is subject to the legally binding terms and conditions that are forth below (the \"Terms\").</string>
     <string name="t2">YOUR USE OF THE APPLICATION CONFIRMS YOUR ACCEPTANCE OF THESE TERMS OF USE AND AGREEMENT TO BE BOUND BY THEM AND ANY AND ALL OTHER APPLICABLE TERMS REFERRED HEREIN ABSOLUTELY, SO PLEASE READ THE TERMS OF USE SET FORTH BELOW AS THEY APPLY TO YOUR USE OF THE APPLICATION.</string>
     <string name="t3">1)   Updates of the Application
 
@@ -196,6 +196,23 @@ Kindly contact with us at plantaid.apps@gmail.com if you have any inquiries or c
 </string>
     <string name="i_accept_the_terms_of_use"><u>I accept the terms of use</u></string>
     <string name="i_accept_the_terms_of_agreement"><u>I accept the terms of agreement</u></string>
-
-
+    <string name = "terms_of_agreement">Welcome to PlantAid, a plantcare app designed to assist beginner gardeners in nurturing their plants. Before using PlantAid, please carefully read and understand the following Terms of Agreement ("Agreement") as it governs your use of the PlantAid mobile application and its associated services. By using the PlantAid app, you agree to comply with and be bound by the terms and conditions outlined in this Agreement.
+\n1.	Acceptance of Terms: By using the PlantAid app, you acknowledge that you have read, understood, and agreed to be bound by this Agreement. If you do not agree with any provision of this Agreement, please refrain from using PlantAid. 
+\n2.	Description of Services PlantAid provides the following modules and features: 
+\n2.1 Weather Forecast: PlantAid utilizes the OpenWeatherMap API to display a 5-day weather forecast. Please note that the weather forecast is provided for informational purposes only and may not always be accurate or up to date.
+\n2.2 Plant Menu: PlantAid offers a menu containing information about over 20 local plants in the Philippines. This module provides planting guidelines and essential care instructions for each plant.
+\n2.3 Task Reminder: The Task Reminder module enables users to create reminders for specific plant care tasks such as watering, fertilizing, and repotting. Users may also create custom tasks tailored to their specific needs. The app will send notifications at the designated time to remind users of their scheduled tasks.
+\n2.4 Plant Identification: PlantAid includes a plant identification module that utilizes the PlantNet API. This feature allows users to identify plants by uploading images and receiving matching plant results. Please note that the accuracy of plant identification may vary and is dependent on the PlantNet API.
+\n3.	User Responsibilities 3.1 Registration: In order to access and utilize PlantAid, you may be required to create a user account. You are responsible for providing accurate and up-to-date information during the registration process.
+\n3.2 Device and Internet Connection: You are responsible for providing and maintaining the necessary devices and internet connection required to access PlantAid. Any costs associated with device usage and internet connectivity are solely your responsibility.
+\n3.3 User Conduct: You agree to use PlantAid in compliance with applicable laws and regulations. You must not engage in any unlawful, fraudulent, or harmful activities while using the app.</string>
+    <string name="laws_reg"><b>1.	Privacy Policy</b> Your privacy is important to us. PlantAid collects and processes personal information in accordance with our Privacy Policy, which can be found [provide a link to the Privacy Policy]. By using PlantAid, you consent to the collection and use of your personal information as described in the Privacy Policy.
+\n2.	Intellectual Property Rights PlantAid and its associated content, including but not limited to text, graphics, logos, and software, are protected by intellectual property rights and laws. You agree not to reproduce, modify, distribute, or create derivative works based on the PlantAid app or its content without prior written permission from the appropriate rights holder.
+\n3.	Limitation of Liability PlantAid and its developers shall not be liable for any direct, indirect, incidental, consequential, or special damages arising from or in connection with the use or inability to use the app, including but not limited to damages for loss of profits, data, or other intangible losses, even if PlantAid has been advised of the possibility of such damages.
+\n4.	Modification and Termination PlantAid reserves the right to modify or terminate the app or any of its modules at any time without prior notice. PlantAid may also update this Agreement from time to time, and the revised version will be effective immediately upon posting. It is your responsibility to review this Agreement periodically for any changes.
+\n5.	Governing Law This Agreement shall be governed by and construed in accordance with the laws of the jurisdiction in which PlantAid operates.
+\n6.	Severability If any provision of this Agreement is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+\n7.	Entire Agreement This Agreement constitutes the entire agreement between you and PlantAid regarding the use of the app and supersedes any prior agreements or understandings, whether written or oral.
+</string>
+    <string name="ta_1">Welcome to PlantAid, a plantcare app designed to assist beginner gardeners in nurturing their plants. Before using PlantAid, please carefully read and understand the following Terms of Agreement as it governs your use of the PlantAid mobile application and its associated services. By using the PlantAid app, you agree to comply with and be bound by the terms and conditions outlined in this Agreement.</string>
 </resources>

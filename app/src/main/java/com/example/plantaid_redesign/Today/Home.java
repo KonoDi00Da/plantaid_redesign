@@ -137,8 +137,8 @@ public class Home extends AppCompatActivity {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Common.current_location = locationResult.getLastLocation();
                 home();
+                Common.current_location = locationResult.getLastLocation();
                 Log.d("Location",locationResult.getLastLocation().getLatitude()+"/"+locationResult.getLastLocation().getLongitude());
             }
         };

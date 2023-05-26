@@ -109,6 +109,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPolicy"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Privacy Policy"

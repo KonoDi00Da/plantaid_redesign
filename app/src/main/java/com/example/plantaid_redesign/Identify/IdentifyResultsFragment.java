@@ -80,6 +80,7 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
 
     private String pushKey, imgUrl, organ;
     private TextView txtError;
+    private boolean isClicked = false;
 
 
     @Override
@@ -149,6 +150,12 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
                     public void onSuccess(Void aVoid) {
                         // Image deleted successfully
                         toast("Identification cancelled");
+                        bundle = getArguments();
+                        if(getActivity() != null){
+                            isClicked = true;
+                            ((Home)getActivity()).hideBottomNavigation(false);
+                            navController.navigate(R.id.action_identifyResultsFragment_to_identifyFragment);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -296,16 +303,11 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
 
     @Override
     public void onBackPressed() {
-        bundle = getArguments();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ((Home)getActivity()).hideBottomNavigation(false);
-                navController.navigate(R.id.action_identifyResultsFragment_to_identifyFragment);
-
-            }
-        }, 1*2000);
-        deleteImageFromStorage(bundle.getString("imagePath"));
+        if(!isClicked){
+            deleteImageFromStorage(bundle.getString("imagePath"));
+        } else {
+            toast("Please wait");
+        }
 
     }
 
@@ -324,6 +326,9 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
     }
 
     private void toast(String msg ){
-        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+        if(getContext() != null){
+            Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+        }
+
     }
 }
