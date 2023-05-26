@@ -1,6 +1,9 @@
 package com.example.plantaid_redesign.Identify;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +41,7 @@ import com.example.plantaid_redesign.Model.PlantIdentifyModel;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
 import com.example.plantaid_redesign.Utilities.BackpressedListener;
+import com.github.hariprasanths.bounceview.BounceView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -138,6 +143,36 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
         }
     }
 
+    private void showDialog() {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.cardview_cancel_identification);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnYes = dialog.findViewById(R.id.btnYes);
+        Button btnNo = dialog.findViewById(R.id.btnNo);
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bundle = getArguments();
+                deleteImageFromStorage(bundle.getString("imagePath"));
+                dialog.dismiss();
+
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        BounceView.addAnimTo(dialog);
+        dialog.show();
+    }
+
     public void deleteImageFromStorage(String name) {
         // Create a reference to the image file
         String userID = userRef.toString();
@@ -150,7 +185,6 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
                     public void onSuccess(Void aVoid) {
                         // Image deleted successfully
                         toast("Identification cancelled");
-                        bundle = getArguments();
                         if(getActivity() != null){
                             isClicked = true;
                             ((Home)getActivity()).hideBottomNavigation(false);
@@ -304,7 +338,7 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
     @Override
     public void onBackPressed() {
         if(!isClicked){
-            deleteImageFromStorage(bundle.getString("imagePath"));
+            showDialog();
         } else {
             toast("Please wait");
         }

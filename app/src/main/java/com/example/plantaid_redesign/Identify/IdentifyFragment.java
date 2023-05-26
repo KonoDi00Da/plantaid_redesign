@@ -286,7 +286,7 @@ public class IdentifyFragment extends Fragment implements BackpressedListener {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Image deleted successfully
-                        toast("Image Deleted");
+                        toast("Plant identification cancelled");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -74,12 +74,6 @@ public class Home extends AppCompatActivity {
         bottomNav = findViewById(R.id.bottomNav);
 
         try {
-
-//            navigationView.getMenu().findItem(R.id.menuAccount).setOnMenuItemClickListener(menuItem -> {
-//                logout();
-//                return true;
-//            });
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -87,15 +81,6 @@ public class Home extends AppCompatActivity {
             }
 
             setBottomNav();
-
-            //data passed from the child fragment (Opening navdrawer)
-//            getSupportFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
-//                @Override
-//                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-//                    String doAction = result.getString("bundleKey");
-//                    drawerLayout.openDrawer(GravityCompat.START);
-//                }
-//            });
 
             //Request Permission
             Dexter.withContext(this)
@@ -105,11 +90,16 @@ public class Home extends AppCompatActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                             if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                buildLocationRequest();
-                                buildLocationCallback();
+                                if(Common.current_location!= null){
+                                    buildLocationCallback();
+                                }else{
+                                    home();
+                                    buildLocationRequest();
+                                    buildLocationCallback();
+                                }
+
 
                                 if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
                                     return;
                                 }
                                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Home.this);
@@ -135,12 +125,8 @@ public class Home extends AppCompatActivity {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                if (locationResult.getLastLocation() != null) {
                     Common.current_location = locationResult.getLastLocation();
                     Log.d("Location", locationResult.getLastLocation().getLatitude() + "/" + locationResult.getLastLocation().getLongitude());
-                } else {
-                    home();
-                }
             }
         };
     }

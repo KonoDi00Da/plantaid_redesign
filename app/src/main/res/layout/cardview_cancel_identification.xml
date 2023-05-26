@@ -16,32 +16,32 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="All reminders will be deleted as well. Do you still want to proceed?"
+            android:text="Are you sure you want to cancel the plant identification?"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/white"
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="50dp"
-            android:text="Delete"
+            android:text="no"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnYes"
             android:layout_marginStart="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="yes"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

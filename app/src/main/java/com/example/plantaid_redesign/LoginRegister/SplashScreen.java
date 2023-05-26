@@ -43,7 +43,7 @@ public class SplashScreen extends AppCompatActivity {
         try{
             createNotificationChannel();
             animate();
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
