@@ -84,6 +84,7 @@ public class IdentifyFragment extends Fragment implements BackpressedListener {
     private static final String TAG = "Identify";
     public static final String IMG_URL = "img_url";
     private LoadingDialog loadingDialog;
+    private Dialog dialog;
     private NavController navController;
     private ImageView imgSearch;
     private CardView cardOptions;
@@ -139,6 +140,11 @@ public class IdentifyFragment extends Fragment implements BackpressedListener {
         darkOverlay = view.findViewById(R.id.darkOverlay);
 
         loadingDialog = new LoadingDialog(getActivity());
+        dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.card_identify_organ);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         firebaseStorage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -190,11 +196,8 @@ public class IdentifyFragment extends Fragment implements BackpressedListener {
     }
 
     public void identifyOrgan(){
-        Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.card_identify_organ);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
 
         ImageView imageView3 = dialog.findViewById(R.id.imageView3);
         Button btnLeaf, btnFlower, btnFruit, btnBark;
