@@ -72,8 +72,6 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNav = findViewById(R.id.bottomNav);
-        navigationView = findViewById(R.id.nav_view);
-        drawerLayout = findViewById(R.id.drawerLayout);
 
         try {
 
@@ -91,13 +89,13 @@ public class Home extends AppCompatActivity {
             setBottomNav();
 
             //data passed from the child fragment (Opening navdrawer)
-            getSupportFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
-                @Override
-                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                    String doAction = result.getString("bundleKey");
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            });
+//            getSupportFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+//                @Override
+//                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+//                    String doAction = result.getString("bundleKey");
+//                    drawerLayout.openDrawer(GravityCompat.START);
+//                }
+//            });
 
             //Request Permission
             Dexter.withContext(this)
@@ -137,9 +135,12 @@ public class Home extends AppCompatActivity {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                home();
-                Common.current_location = locationResult.getLastLocation();
-                Log.d("Location",locationResult.getLastLocation().getLatitude()+"/"+locationResult.getLastLocation().getLongitude());
+                if (locationResult.getLastLocation() != null) {
+                    Common.current_location = locationResult.getLastLocation();
+                    Log.d("Location", locationResult.getLastLocation().getLatitude() + "/" + locationResult.getLastLocation().getLongitude());
+                } else {
+                    home();
+                }
             }
         };
     }
