@@ -36,104 +36,20 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
+            android:paddingTop="30dp"
+            android:clipToPadding="false"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView28"
-                android:justificationMode="inter_word"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/t1" />
-
-            <TextView
-                android:id="@+id/textView29"
-                android:justificationMode="inter_word"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/t2" />
-
-            <TextView
-                android:id="@+id/textView31"
-                android:justificationMode="inter_word"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/t3" />
-
-            <TextView
-                android:id="@+id/textView32"
-                android:justificationMode="inter_word"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/t4" />
-
-            <TextView
-                android:id="@+id/textView33"
-                android:justificationMode="inter_word"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/t5" />
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:justificationMode="inter_word"
-                android:text="@string/t6" />
-
-            <TextView
-                android:id="@+id/textView34"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:justificationMode="inter_word"
-                android:layout_marginEnd="20dp"
-                android:text="@string/t7" />
-
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:justificationMode="inter_word"
-                android:text="@string/t8" />
-
-            <TextView
-                android:id="@+id/textView36"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:justificationMode="inter_word"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="80dp"
-                android:text="@string/t9" />
+                android:text="@string/terms_of_agreement"
+                android:justificationMode="inter_word"/>
 
         </LinearLayout>
     </ScrollView>

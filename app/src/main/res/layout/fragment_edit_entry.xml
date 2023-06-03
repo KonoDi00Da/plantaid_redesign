@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Journal.EditEntryFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardPreventCornerOverlap="false"
+        android:clipChildren="true"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp">
+                    <RelativeLayout
+                        android:elevation="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingBottom="10dp">
+                        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                            app:elevation="10dp"
+                            android:id="@+id/fabUpload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            app:icon="@drawable/ic_baseline_file_upload_24"
+                            android:text="Add Photo"
+                            android:fontFamily="@font/merriweather_bold"/>
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabTakePicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@id/fabUpload"
+                            android:layout_alignEnd="@id/fabUpload"
+                            android:layout_marginBottom="16dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_baseline_camera_24"
+                            android:visibility="gone"
+                            app:fabSize="normal" />
+                        <!--Action name text for the add alarm button-->
+                        <TextView
+                            android:id="@+id/txtTake"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/fabTakePicture"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_toStartOf="@+id/fabTakePicture"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Take a Picture"
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
+                        <!--Floating action button for add person-->
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabOpenGallery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@id/fabTakePicture"
+                            android:layout_alignEnd="@id/fabUpload"
+                            android:layout_marginBottom="10dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_baseline_image_24"
+                            android:visibility="gone"
+                            app:fabSize="normal" />
+                        <!--Action name text for the add person button-->
+                        <TextView
+                            android:id="@+id/txtOpen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/fabOpenGallery"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_toStartOf="@+id/fabOpenGallery"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Open Gallery"
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="320dp"
+                        android:layout_marginBottom="20dp"
+                        app:cardBackgroundColor="@color/purple_700"
+                        app:cardElevation="5dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:strokeWidth="0dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:alpha="0.5"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_baseline_image_24" />
+
+                            <ImageView
+                                android:id="@+id/imgJournalContent"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop" />
+                            <ImageButton
+                                android:id="@+id/btnBack"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_below="@id/statusBar"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="20dp"
+                                android:background="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+                            <Button
+                                app:backgroundTint="@color/white"
+                                android:layout_alignParentEnd="true"
+                                android:id="@+id/btnSave"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_below="@id/statusBar"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="20dp"
+                                android:background="@drawable/ic_baseline_check_24" />
+
+                            <RelativeLayout
+                                android:id="@+id/statusBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_alignParentTop="true" />
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtTitleLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    app:hintTextColor="@color/nice_green">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Title"
+                        android:fontFamily="@font/merriweather_bold"
+                        android:inputType="textPersonName"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtContentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    app:hintTextColor="@color/nice_green">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Content"
+                        android:fontFamily="@font/merriweather_bold"
+                        android:inputType="textMultiLine"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

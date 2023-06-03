@@ -39,6 +39,7 @@
             android:clipToPadding="false"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
+            android:paddingBottom="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -46,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ta_1"
+                android:text="@string/terms_of_agreement"
                 android:justificationMode="inter_word"/>
 
         </LinearLayout>

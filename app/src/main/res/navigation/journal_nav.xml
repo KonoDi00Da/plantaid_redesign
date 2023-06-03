@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/journal_nav"
+    app:startDestination="@id/journalFragment">
+
+    <fragment
+        android:id="@+id/journalFragment"
+        android:name="com.example.plantaid_redesign.Journal.JournalFragment"
+        android:label="fragment_journal"
+        tools:layout="@layout/fragment_journal" >
+        <action
+            android:id="@+id/action_journalFragment_to_editEntryFragment"
+            app:destination="@id/editEntryFragment" />
+        <action
+            android:id="@+id/action_journalFragment_to_recentlyDeletedFragment"
+            app:destination="@id/recentlyDeletedFragment" />
+        <action
+            android:id="@+id/action_journalFragment_to_viewEntryFragment"
+            app:destination="@id/viewEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editEntryFragment"
+        android:name="com.example.plantaid_redesign.Journal.EditEntryFragment"
+        android:label="fragment_edit_entry"
+        tools:layout="@layout/fragment_edit_entry" >
+        <action
+            android:id="@+id/action_editEntryFragment_to_journalFragment"
+            app:destination="@id/journalFragment" />
+        <action
+            android:id="@+id/action_editEntryFragment_to_viewEntryFragment"
+            app:destination="@id/viewEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentlyDeletedFragment"
+        android:name="com.example.plantaid_redesign.Journal.RecentlyDeletedFragment"
+        android:label="fragment_recently_deleted"
+        tools:layout="@layout/fragment_recently_deleted" >
+        <action
+            android:id="@+id/action_recentlyDeletedFragment_to_journalFragment"
+            app:destination="@id/journalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewEntryFragment"
+        android:name="com.example.plantaid_redesign.Journal.ViewEntryFragment"
+        android:label="fragment_view_entry"
+        tools:layout="@layout/fragment_view_entry" >
+        <action
+            android:id="@+id/action_viewEntryFragment_to_journalFragment"
+            app:destination="@id/journalFragment" />
+        <action
+            android:id="@+id/action_viewEntryFragment_to_editEntryFragment"
+            app:destination="@id/editEntryFragment" />
+    </fragment>
+</navigation>

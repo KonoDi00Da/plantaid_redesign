@@ -219,80 +219,84 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
                     try {
                         //for results
                         JSONArray results = response.getJSONArray("results");
-                        for(int i = 0; i < results.length(); i++){
-                            JSONObject resultObject = results.getJSONObject(i);
-                            String score = String.valueOf(resultObject.getDouble("score"));
-                            model = new PlantIdentifyModel();
+                        if(results != null){
+                            for(int i = 0; i < results.length(); i++){
+                                JSONObject resultObject = results.getJSONObject(i);
+                                String score = String.valueOf(resultObject.getDouble("score"));
+                                model = new PlantIdentifyModel();
 
-                            // scientific name of plant
-                            JSONObject species = resultObject.getJSONObject("species");
-                            JSONObject genus = species.getJSONObject("genus");
-                            String scientificName = species.getString("scientificNameWithoutAuthor");
+                                // scientific name of plant
+                                JSONObject species = resultObject.getJSONObject("species");
+                                JSONObject genus = species.getJSONObject("genus");
+                                String scientificName = species.getString("scientificNameWithoutAuthor");
 //                            String scientificName = genus.getString("scientificName");
 
-                            //genus
-                            String scientificNameGenus = genus.getString("scientificName");
+                                //genus
+                                String scientificNameGenus = genus.getString("scientificName");
 
 
-                            // family of plant
-                            JSONObject familyObj = species.getJSONObject("family");
-                            String family = familyObj.getString("scientificName");
+                                // family of plant
+                                JSONObject familyObj = species.getJSONObject("family");
+                                String family = familyObj.getString("scientificName");
 
 //                            // common names of plant
-                            JSONArray commonName = species.getJSONArray("commonNames");
+                                JSONArray commonName = species.getJSONArray("commonNames");
 
-                            List<String> commonNameList = new ArrayList<String>();
-                            for (int j = 0; j < commonName.length(); j++) {
-                                commonNameList.add(commonName.getString(j));
-                            }
+                                List<String> commonNameList = new ArrayList<String>();
+                                for (int j = 0; j < commonName.length(); j++) {
+                                    commonNameList.add(commonName.getString(j));
+                                }
 
-                            int size = commonNameList.size();
-                            String[] stringArray
-                                    = commonNameList.toArray(new String[size]);
-                            model.setComName(TextUtils.join(", ",stringArray));
+                                int size = commonNameList.size();
+                                String[] stringArray
+                                        = commonNameList.toArray(new String[size]);
+                                model.setComName(TextUtils.join(", ",stringArray));
 
 
 
-                            // images of plants
-                            JSONArray images = resultObject.getJSONArray("images");
+                                // images of plants
+                                JSONArray images = resultObject.getJSONArray("images");
 
-                            List<String> plantImages = new ArrayList<String>();
-                            for (int j = 0; j < images.length(); j++) {
-                                JSONObject imagesObj = images.getJSONObject(j);
-                                JSONObject imgURL = imagesObj.getJSONObject("url");
-                                plantImages.add(imgURL.getString("s"));
-                            }
+                                List<String> plantImages = new ArrayList<String>();
+                                for (int j = 0; j < images.length(); j++) {
+                                    JSONObject imagesObj = images.getJSONObject(j);
+                                    JSONObject imgURL = imagesObj.getJSONObject("url");
+                                    plantImages.add(imgURL.getString("s"));
+                                }
 
-                            int len = plantImages.size();
-                            String[] stringImages
-                                    = plantImages.toArray(new String[size]);
+                                int len = plantImages.size();
+                                String[] stringImages
+                                        = plantImages.toArray(new String[size]);
 
 //                            txtPlantID.setText(String.valueOf(len));
 
-                            if (len >= 1){
-                                model.setImg1(stringImages[0]);
-                                if(len >= 2 ){
-                                    model.setImg2(stringImages[1]);
-                                    if(len >= 3){
-                                        model.setImg3(stringImages[2]);
-                                        if(len >= 4){
-                                            model.setImg4(stringImages[3]);
-                                            if(len >= 5){
-                                                model.setImg5(stringImages[4]);
+                                if (len >= 1){
+                                    model.setImg1(stringImages[0]);
+                                    if(len >= 2 ){
+                                        model.setImg2(stringImages[1]);
+                                        if(len >= 3){
+                                            model.setImg3(stringImages[2]);
+                                            if(len >= 4){
+                                                model.setImg4(stringImages[3]);
+                                                if(len >= 5){
+                                                    model.setImg5(stringImages[4]);
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                model.setSciName(scientificName);
+                                model.setFamily(family);
+                                model.setScore(score);
+                                model.setGenus(scientificNameGenus);
+                                list.add(model);
+
+                                cAdapter.notifyDataSetChanged();
                             }
-                            model.setSciName(scientificName);
-                            model.setFamily(family);
-                            model.setScore(score);
-                            model.setGenus(scientificNameGenus);
-                            list.add(model);
-
-                            cAdapter.notifyDataSetChanged();
+                        }else{
+                            txtError.setVisibility(View.VISIBLE);
+                            txtError.setText("No matching results");
                         }
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -318,6 +322,8 @@ public class IdentifyResultsFragment extends Fragment implements BackpressedList
                         txtError.setText(statusCode + " " + errorTxt + " " + message);
                     } else {
                         Log.d("JSON", "Error");
+                        txtError.setVisibility(View.VISIBLE);
+                        txtError.setText("No matching results");
                         // Handle the case when networkResponse or data is null
                         // Show an error message or take appropriate action
                     }

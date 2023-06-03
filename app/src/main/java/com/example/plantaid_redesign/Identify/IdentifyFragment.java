@@ -429,14 +429,18 @@ public class IdentifyFragment extends Fragment implements BackpressedListener {
                     reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            loadingDialog.stopLoading();
                             PlantIdentifiedModel model = new PlantIdentifiedModel();
                             model.setIdImage(uri.toString()+currentTime);
                             u_plantID = "1001";
                             userRef.child("plantIdentification").child(u_plantID).setValue(model);
                             url = model.getIdImage();
-                            loadingDialog.stopLoading();
 //                            toast("Plant added successfully");
+                            if(getActivity()!=null){
                                 identifyOrgan();
+                            }else{
+                                Log.e("dialog", "Error");
+                            }
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {

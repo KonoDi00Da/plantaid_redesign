@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,6 +21,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +37,12 @@ import com.example.plantaid_redesign.Identify.IdentifyContainerFragment;
 import com.example.plantaid_redesign.Identify.IdentifyFragment;
 import com.example.plantaid_redesign.Identify.IdentifyHistoryFragment;
 import com.example.plantaid_redesign.Identify.IdentifyMoreInfoFragment;
+import com.example.plantaid_redesign.Identify.IdentifyMoreInfoFragment_Identified;
 import com.example.plantaid_redesign.Identify.IdentifyResultsFragment;
+import com.example.plantaid_redesign.Journal.EditEntryFragment;
+import com.example.plantaid_redesign.Journal.JournalFragment;
+import com.example.plantaid_redesign.Journal.RecentlyDeletedFragment;
+import com.example.plantaid_redesign.Journal.ViewEntryFragment;
 import com.example.plantaid_redesign.LoginRegister.LoginRegisterActivity;
 import com.example.plantaid_redesign.MyGarden.MyGardenAllPlantsFragment;
 import com.example.plantaid_redesign.MyGarden.MyGardenContainerFragment;
@@ -86,7 +95,10 @@ public class Home extends AppCompatActivity {
             }
 
             setBottomNav();
-
+            if(isLocationEnabled(Home.this)){
+            }else{
+                showDialog();
+            }
             //Request Permission
             Dexter.withContext(this)
                     .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -95,9 +107,11 @@ public class Home extends AppCompatActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                             if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                showDialog();
+
+                                buildLocationRequest();
+                                buildLocationCallback();
                                 if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                    return;
+                                    showDialog();
                                 }
                                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Home.this);
                                 fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
@@ -116,6 +130,29 @@ public class Home extends AppCompatActivity {
             Log.e(TAG, "bottomnav", e);
         }
     }
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+        }else{
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+
+
+    }
+
 
     public void buildLocationCallback() {
         locationCallback = new LocationCallback() {
@@ -128,7 +165,7 @@ public class Home extends AppCompatActivity {
         };
     }
 
-    private void showDialog() {
+    public void showDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.cardview_location_services);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -136,19 +173,18 @@ public class Home extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
+
         buildLocationRequest();
         buildLocationCallback();
-        home();
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
-    }
 
+    }
 
 
     public void buildLocationRequest() {
@@ -157,7 +193,6 @@ public class Home extends AppCompatActivity {
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(3000);
         locationRequest.setSmallestDisplacement(10.0f);
-
     }
 
     private void setBottomNav(){
@@ -263,8 +298,16 @@ public class Home extends AppCompatActivity {
             AboutUsFragment.backpressedlistener.onBackPressed();
         } else if(PrivacyPolicyFragment.backpressedlistener !=null){
             PrivacyPolicyFragment.backpressedlistener.onBackPressed();
-        } else if(MoreHelpFragment.backpressedlistener !=null){
-            MoreHelpFragment.backpressedlistener.onBackPressed();
+        } else if(IdentifyMoreInfoFragment_Identified.backpressedlistener !=null){
+            IdentifyMoreInfoFragment_Identified.backpressedlistener.onBackPressed();
+        } else if(EditEntryFragment.backpressedlistener !=null){
+            EditEntryFragment.backpressedlistener.onBackPressed();
+        } else if(JournalFragment.backpressedlistener !=null){
+            JournalFragment.backpressedlistener.onBackPressed();
+        } else if(RecentlyDeletedFragment.backpressedlistener !=null){
+            RecentlyDeletedFragment.backpressedlistener.onBackPressed();
+        } else if(ViewEntryFragment.backpressedlistener !=null){
+            ViewEntryFragment.backpressedlistener.onBackPressed();
         } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();

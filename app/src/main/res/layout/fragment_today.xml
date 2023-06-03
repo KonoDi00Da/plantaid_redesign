@@ -35,7 +35,6 @@
 
             <ImageView
                 android:id="@+id/btnNavDrawer"
-                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -43,7 +42,8 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="30dp"
-                android:src="@drawable/ic_tab" />
+                android:src="@drawable/ic_baseline_refresh_24"
+                app:tint="@color/dark_green" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:visibility="invisible"
@@ -68,6 +68,7 @@
             android:text="@string/hello_there"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="60dp"
             android:fontFamily="@font/merriweather_bold"
             android:textColor="@color/dark_green"
             android:textSize="30sp" />

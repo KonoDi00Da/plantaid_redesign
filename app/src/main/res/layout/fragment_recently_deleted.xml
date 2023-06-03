@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Journal.RecentlyDeletedFragment" android:id="@+id/parent">
+
+    <ImageView
+        android:id="@+id/doodle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nice_green"
+        android:alpha="0.39"
+        android:scaleType="centerCrop"/>
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/ic_baseline_arrow_back_ios_new_24"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"/>
+
+    <ImageButton
+        app:backgroundTint="@color/dark_green"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnSelect"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/ic_baseline_list_24"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recently Deleted"
+        android:textSize="25sp"
+        android:textColor="@color/dark_green"
+        android:fontFamily="@font/merriweather_bold"
+        android:layout_below="@id/btnBack"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/txtMenu"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txtMenu"
+        android:layout_marginBottom="19dp"
+        app:cardCornerRadius="25dp"
+        android:layout_marginTop="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                tools:listitem="@layout/adapter_trash_items"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rvRecentTrash"/>
+
+            <ImageView
+                android:id="@+id/imgNoContent"
+                android:layout_width="208dp"
+                android:layout_height="184dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_baseline_remove_red_eye_24" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <RelativeLayout
+        android:layout_marginBottom="20dp"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/bg_actions"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="176dp"
+            android:layout_height="248dp"
+            android:layout_alignEnd="@id/fabActions"
+            android:layout_alignBottom="@id/fabActions"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_camera_24" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            app:elevation="10dp"
+            android:id="@+id/fabActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
+            app:icon="@drawable/ic_baseline_list_alt_24"
+            app:backgroundTint="@color/nice_green"
+            app:iconTint="@color/white"
+            android:textColor="@color/white"
+            android:text="Actions"
+            android:fontFamily="@font/merriweather_bold"
+            tools:visibility="visible"
+            android:visibility="gone"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRestore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/fabActions"
+            android:layout_alignEnd="@id/fabActions"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_baseline_restore_from_trash_24"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:fabSize="normal"
+            app:tint="@color/white"
+            app:backgroundTint="@color/nice_green"/>
+        <!--Action name text for the add alarm button-->
+        <TextView
+            tools:visibility="visible"
+            android:id="@+id/txtTake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/fabRestore"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/fabRestore"
+            android:fontFamily="@font/merriweather_regular"
+            android:text="Batch Restore"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+        <!--Floating action button for add person-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/fabRestore"
+            android:layout_alignEnd="@id/fabActions"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_baseline_restore_from_trash_24"
+            app:tint="@color/dark_green"
+            app:backgroundTint="@color/light_green"
+            android:visibility="gone"
+            app:fabSize="normal"
+            tools:visibility="visible" />
+        <!--Action name text for the add person button-->
+        <TextView
+            tools:visibility="visible"
+            android:id="@+id/txtOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/fabDelete"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/fabDelete"
+            android:fontFamily="@font/merriweather_regular"
+            android:text="Batch delete"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

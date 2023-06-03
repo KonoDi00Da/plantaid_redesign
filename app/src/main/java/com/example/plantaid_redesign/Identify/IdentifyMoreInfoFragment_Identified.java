@@ -71,7 +71,6 @@ public class IdentifyMoreInfoFragment_Identified extends Fragment implements Bac
                 }
             });
 
-
         } catch (Exception e) {
             Log.e(TAG, "error", e);
         }
@@ -123,6 +122,7 @@ public class IdentifyMoreInfoFragment_Identified extends Fragment implements Bac
     @Override
     public void onBackPressed() {
         navController.popBackStack();
+
     }
     public static BackpressedListener backpressedlistener;
 

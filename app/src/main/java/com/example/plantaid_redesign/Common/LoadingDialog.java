@@ -13,7 +13,7 @@ public class LoadingDialog {
 
     Context context;
     Dialog dialog;
-
+    TextView label;
     public LoadingDialog(Context myContext){
         context = myContext;
     }
@@ -30,7 +30,7 @@ public class LoadingDialog {
 
         //initialize the textview
 
-        final TextView label = dialog.findViewById(R.id.textView26);
+        label = dialog.findViewById(R.id.textView26);
         label.setText(loadingLabel + "...");
 
         dialog.show();
@@ -39,6 +39,10 @@ public class LoadingDialog {
     public void stopLoading(){
         dialog.cancel();
         dialog.dismiss();
+    }
+    public void onProgress(String text){
+        label.setText(text);
+        dialog.show();
     }
 
 }

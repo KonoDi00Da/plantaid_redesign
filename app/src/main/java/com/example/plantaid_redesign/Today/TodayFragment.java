@@ -146,19 +146,33 @@ public class TodayFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
         try{
+            refresh();
             greetUser();
-            getWeatherInformation();
-            openDrawer();
-            openWeatherForecastFragment();
             setBackgroundImage();
             selectCalendar();
             showReminders();
+            getWeatherInformation();
+            openWeatherForecastFragment();
+
+
 
         }catch (Exception e){
             Log.e(TAG, "tab", e);
         }
-
     }
+
+    public void refresh(){
+        btnNavDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Home.class);
+                intent.putExtra("fragment_id", 2);
+                startActivity(intent);
+                ((Home) getActivity()).home();
+            }
+        });
+    }
+
 
     public void openDrawer(){
         btnNavDrawer.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +213,6 @@ public class TodayFragment extends Fragment {
 
 
     public void selectCalendar(){
-
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDaySelect() {

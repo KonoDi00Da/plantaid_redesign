@@ -43,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }else if(message.equals("Repot")) {
                 message = "Your plant needs repotting!";
             }else{
-                message = "You have a task!";
+                message = "You have a task! " + message;
             }
             String del = intent.getStringExtra("delete");
 
