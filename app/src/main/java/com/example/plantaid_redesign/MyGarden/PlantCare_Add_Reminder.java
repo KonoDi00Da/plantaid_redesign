@@ -265,7 +265,8 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                     userKey,
                     pushKey,
                     String.valueOf(notificationID),
-                    String.valueOf(requestCode));
+                    String.valueOf(requestCode),
+                    0, 0, 0, 0);
 
             userRef.child(pushKey).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

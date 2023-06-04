@@ -3,11 +3,14 @@ package com.example.plantaid_redesign.Model;
 public class PlantReminderModel {
     public String plantName, reminderType, date, time, userKey, reminderKey, notificationID, requestCode;
 
+    public int water, repot, fertilize, custom;
+
     public PlantReminderModel(){
 
     }
 
-    public PlantReminderModel(String plantName, String reminderType, String date, String time, String userKey, String reminderKey, String notificationID, String requestCode) {
+
+    public PlantReminderModel(String plantName, String reminderType, String date, String time, String userKey, String reminderKey, String notificationID, String requestCode, int water, int repot, int fertilize, int custom) {
         this.plantName = plantName;
         this.reminderType = reminderType;
         this.date = date;
@@ -16,6 +19,42 @@ public class PlantReminderModel {
         this.reminderKey = reminderKey;
         this.notificationID = notificationID;
         this.requestCode = requestCode;
+        this.water = water;
+        this.repot = repot;
+        this.fertilize = fertilize;
+        this.custom = custom;
+    }
+
+    public int getWater() {
+        return water;
+    }
+
+    public void setWater(int water) {
+        this.water = water;
+    }
+
+    public int getRepot() {
+        return repot;
+    }
+
+    public void setRepot(int repot) {
+        this.repot = repot;
+    }
+
+    public int getFertilize() {
+        return fertilize;
+    }
+
+    public void setFertilize(int fertilize) {
+        this.fertilize = fertilize;
+    }
+
+    public int getCustom() {
+        return custom;
+    }
+
+    public void setCustom(int custom) {
+        this.custom = custom;
     }
 
     public String getNotificationID() {

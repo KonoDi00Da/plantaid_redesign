@@ -65,6 +65,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
     private Button btnRemoveReminder,btnFinishReminder;
     private FloatingActionButton btnBack, btnAdd;
 
+
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private FirebaseDatabase database;
@@ -72,17 +73,19 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
     private String reminder_key, plant_name, oldTime, oldReminder, oldDate, user_key, requestCode, notificationID;
 
     public static String reminderKey;
-    private String newTime, newReminder,newDate;
+    private String newReminder;
     private int year, month, day;
     private int hour, minute;
-    private String timeFormat, task, customTask;
+    private String task;
+
+    private int water, repot, fertilize, custom;
 
     LocalTime time;
 
-    @TimeFormat
-    private int clockFormat;
     @Nullable
     private Integer timeInputMode;
+
+    private boolean isFinishClicked;
 
     private final SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
@@ -91,14 +94,11 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_care_edit_reminder);
 
-        clockFormat = TimeFormat.CLOCK_12H;
-        selectedDate = LocalDate.now();
-        time = LocalTime.now();
-
         //Initialize firebase
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
+        isFinishClicked = false;
 
         editPlantName = findViewById(R.id.editPlantName);
         editTask = findViewById(R.id.editTask);
@@ -123,10 +123,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         }
     }
 
-    public static String getReminderKey(){
-        return reminderKey;
-    }
-
     private void setUserTask() {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,19 +134,56 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                     editTask.requestFocus();
                     return;
                 }
-                addToFirebase();
-                setNotification();
-                Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
-                //intent.putExtra("plant_image", model.getImage());
-                intent.putExtra("commonName", plant_name);
-                intent.putExtra("userKey", user_key);
-                intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
-                intent.putExtra("page", "1");
-                intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                closeEditFragment();
             }
         });
+
+        btnFinishReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isFinishClicked){
+                    isFinishClicked = true;
+                    switch (task){
+                        case "Water":
+                            water++;
+                            break;
+                        case "Fertilize":
+                            fertilize++;
+                            break;
+                        case "Repot":
+                            repot++;
+                            break;
+                        default:
+                            custom++;
+                            break;
+                    }
+                    newReminder = editTask.getText().toString().trim();
+                    if (newReminder.isEmpty()) {
+                        newReminder = editTask.getText().toString().trim();
+                        editTask.setError("Text is required");
+                        editTask.requestFocus();
+                        return;
+                    }
+                    closeEditFragment();
+                }
+
+            }
+        });
+    }
+
+    private void closeEditFragment(){
+        addToFirebase();
+        setNotification();
+
+        Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
+        //intent.putExtra("plant_image", model.getImage());
+        intent.putExtra("commonName", plant_name);
+        intent.putExtra("userKey", user_key);
+        intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
+        intent.putExtra("page", "1");
+        intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void getSetIntents(){
@@ -163,15 +196,19 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         reminder_key = intent.getStringExtra("reminder_key");
         notificationID = intent.getStringExtra("notificationID");
         requestCode = intent.getStringExtra("requestCode");
-
+        water = intent.getIntExtra("water", 0);
+        fertilize = intent.getIntExtra("fertilize", 0);
+        repot = intent.getIntExtra("repot", 0);
+        custom = intent.getIntExtra("custom", 0);
+        task = intent.getStringExtra("reminder");
 
         editPlantName.setText(plant_name);
         editTask.setText(oldReminder);
         editCalendarDate.setText(formattedDate(LocalDate.parse(oldDate)));
         editTime.setText(formattedTime(LocalTime.parse(oldTime)));
 
-        newTime = oldTime;
-        newDate = oldDate;
+        selectedDate = LocalDate.parse(oldDate);
+        time = LocalTime.parse(oldTime);
     }
 
     public void removeReminder(){
@@ -219,13 +256,16 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
 
     private void addToFirebase() {
         DatabaseReference userRef = database.getReference().child("PlantReminders").child(currentUser.getUid());
-        PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name,newReminder,
+        PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name, newReminder,
                 String.valueOf(selectedDate),
-                String.valueOf(time), user_key, reminder_key, notificationID, requestCode);
+                String.valueOf(time), user_key, reminder_key, notificationID, requestCode,
+                water, repot, fertilize, custom);
+
         userRef.child(reminder_key).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 toast("Reminder has been edited");
+                isFinishClicked = false;
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -237,34 +277,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
 
     }
 
-    private void showDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.cardview_date_picker);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.setCancelable(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        Button btnRange = dialog.findViewById(R.id.btnRange);
-        Button btnSingle = dialog.findViewById(R.id.btnSingle);
-
-        btnRange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialDateRangePicker();
-                dialog.dismiss();
-            }
-        });
-
-        btnSingle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialDatePicker();
-                dialog.dismiss();
-            }
-        });
-        BounceView.addAnimTo(dialog);
-        dialog.show();
-    }
 
     private void showCompletedDialog() {
         Dialog dialog = new Dialog(this);
@@ -309,7 +321,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         editCalendarDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                materialDatePicker();
             }
         });
     }
@@ -327,6 +339,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
 
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraintBuilder.build());
         builder.setSelection(selectedDate.toEpochDay() * 24 * 60 * 60 * 1000);
+
         final MaterialDatePicker materialDatePicker = builder.build();
         materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
 
@@ -337,9 +350,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                 selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
                 editCalendarDate.setText(formatDate(selectedDate));
 
-                newDate = materialDatePicker.getHeaderText().replace(" ","_");
-                //String selectedDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).toString();
-                //cal.setTimeInMillis((Long) selection);
                 year = localDateToCalendar(selectedDate).get(Calendar.YEAR);
                 month = localDateToCalendar(selectedDate).get(Calendar.MONTH);
                 day = localDateToCalendar(selectedDate).get(Calendar.DAY_OF_MONTH);
@@ -453,6 +463,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                 .setHour(time.getHour())
                 .setMinute(time.getMinute());
 
+
         if (timeInputMode != null) {
             materialTimePickerBuilder.setInputMode(timeInputMode);
         }
@@ -469,19 +480,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                 editTime.setText(formattedTime(time));
             }
         });
-    }
-
-    private void onTimeSet(int newHour, int newMinute) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, newHour);
-        cal.set(Calendar.MINUTE, newMinute);
-        cal.setLenient(false);
-
-        String time = formatter.format(cal.getTime());
-        newTime = time.replace(" ","_");
-        editTime.setText(time);
-        hour = newHour;
-        minute = newMinute;
     }
 
     private void deleteReminder() {
