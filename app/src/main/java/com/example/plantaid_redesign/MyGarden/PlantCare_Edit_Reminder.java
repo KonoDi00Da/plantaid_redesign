@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plantaid_redesign.Model.PlantReminderModel;
+import com.example.plantaid_redesign.Model.PlantRemindersStatistics;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Today.Home;
 import com.example.plantaid_redesign.Utilities.AlarmReceiver;
@@ -137,38 +138,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                 closeEditFragment();
             }
         });
-
-        btnFinishReminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isFinishClicked){
-                    isFinishClicked = true;
-                    switch (task){
-                        case "Water":
-                            water++;
-                            break;
-                        case "Fertilize":
-                            fertilize++;
-                            break;
-                        case "Repot":
-                            repot++;
-                            break;
-                        default:
-                            custom++;
-                            break;
-                    }
-                    newReminder = editTask.getText().toString().trim();
-                    if (newReminder.isEmpty()) {
-                        newReminder = editTask.getText().toString().trim();
-                        editTask.setError("Text is required");
-                        editTask.requestFocus();
-                        return;
-                    }
-                    closeEditFragment();
-                }
-
-            }
-        });
     }
 
     private void closeEditFragment(){
@@ -277,6 +246,26 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
 
     }
 
+    private void statistics() {
+        DatabaseReference userRef = database.getReference().child("PlantStatistics").child(currentUser.getUid());
+        PlantRemindersStatistics plantReminderModel = new PlantRemindersStatistics(water, repot, fertilize, custom);
+
+        userRef.child(reminder_key).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                toast("Reminder has been edited");
+                isFinishClicked = false;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: ", e);
+                toast("Something went wrong");
+            }
+        });
+
+    }
+
 
     private void showCompletedDialog() {
         Dialog dialog = new Dialog(this);
@@ -292,6 +281,40 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //addcodesa firebase
+                if(!isFinishClicked){
+                    isFinishClicked = true;
+                    switch (task){
+                        case "Water":
+                            water++;
+                            break;
+                        case "Fertilize":
+                            fertilize++;
+                            break;
+                        case "Repot":
+                            repot++;
+                            break;
+                        default:
+                            custom++;
+                            break;
+                    }
+                    newReminder = editTask.getText().toString().trim();
+                    if (newReminder.isEmpty()) {
+                        newReminder = editTask.getText().toString().trim();
+                        editTask.setError("Text is required");
+                        editTask.requestFocus();
+                        return;
+                    }
+                    statistics();
+                    Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
+                    //intent.putExtra("plant_image", model.getImage());
+                    intent.putExtra("commonName", plant_name);
+                    intent.putExtra("userKey", user_key);
+                    intent.putExtra("plantKey", UserMyGardenPlantsActivity.getPlantKeyStatic());
+                    intent.putExtra("page", "1");
+                    intent.putExtra("plant_image", UserMyGardenPlantsActivity.getImage());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
                 dialog.dismiss();
             }
         });
