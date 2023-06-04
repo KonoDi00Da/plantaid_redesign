@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.plantaid_redesign.Adapter.ReminderPlant_Adapter;
 import com.example.plantaid_redesign.Model.PlantReminderModel;
+import com.example.plantaid_redesign.Model.PlantRemindersStatistics;
+import com.example.plantaid_redesign.Model.User_Plants;
 import com.example.plantaid_redesign.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +49,7 @@ public class PlantCareFragment extends Fragment {
     private ReminderPlant_Adapter cAdapter;
     private RecyclerView recyclerView;
     ArrayList<PlantReminderModel> list = new ArrayList<>();
+    ArrayList<PlantRemindersStatistics> list2 = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +70,7 @@ public class PlantCareFragment extends Fragment {
         cardWater = view.findViewById(R.id.cardWater);
         cardFertilize = view.findViewById(R.id.cardFertilize);
         recyclerView = view.findViewById(R.id.reminderRecyclerView);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
@@ -110,6 +114,8 @@ public class PlantCareFragment extends Fragment {
             }
         });
     }
+
+
     public void openReminderFrag(){
         Intent intent = new Intent(getActivity(), PlantCare_Add_Reminder.class);
         intent.putExtra("plantCommonName", plantCommonName);

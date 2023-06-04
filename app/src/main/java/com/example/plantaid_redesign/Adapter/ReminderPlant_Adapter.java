@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plantaid_redesign.Model.PlantReminderModel;
+import com.example.plantaid_redesign.Model.PlantRemindersStatistics;
 import com.example.plantaid_redesign.MyGarden.PlantCare_Edit_Reminder;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Utilities.DateUtils;

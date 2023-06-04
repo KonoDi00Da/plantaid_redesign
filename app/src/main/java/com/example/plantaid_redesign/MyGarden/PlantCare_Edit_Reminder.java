@@ -165,11 +165,10 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         reminder_key = intent.getStringExtra("reminder_key");
         notificationID = intent.getStringExtra("notificationID");
         requestCode = intent.getStringExtra("requestCode");
-        water = intent.getIntExtra("water", 0);
-        fertilize = intent.getIntExtra("fertilize", 0);
-        repot = intent.getIntExtra("repot", 0);
-        custom = intent.getIntExtra("custom", 0);
         task = intent.getStringExtra("reminder");
+        getStats();
+
+
 
         editPlantName.setText(plant_name);
         editTask.setText(oldReminder);
@@ -223,6 +222,33 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         });
     }
 
+    private void getStats(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("PlantStatistics").child(currentUser.getUid()).child(user_key);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PlantRemindersStatistics userPlants = snapshot.getValue(PlantRemindersStatistics.class);
+                if(userPlants != null){
+                    fertilize = userPlants.fertilize;
+                    repot = userPlants.repot;
+                    custom = userPlants.custom;
+                    water = userPlants.water;
+
+                    Log.d(TAG, "getSetIntents: " + water);
+                    Log.d(TAG, "getSetIntents: " + custom);
+                    Log.d(TAG, "getSetIntents: " + fertilize);
+                    Log.d(TAG, "getSetIntents: " + repot);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                toast("Error");
+
+            }
+
+        });
+    }
+
     private void addToFirebase() {
         DatabaseReference userRef = database.getReference().child("PlantReminders").child(currentUser.getUid());
         PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name, newReminder,
@@ -234,7 +260,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 toast("Reminder has been edited");
-                isFinishClicked = false;
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -304,7 +329,9 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
                         editTask.requestFocus();
                         return;
                     }
+                    //addToFirebase();
                     statistics();
+                    deleteReminder();
                     Intent intent = new Intent(PlantCare_Edit_Reminder.this, UserMyGardenPlantsActivity.class);
                     //intent.putExtra("plant_image", model.getImage());
                     intent.putExtra("commonName", plant_name);

@@ -10,6 +10,10 @@ public class PlantRemindersStatistics {
         this.custom = custom;
     }
 
+    public PlantRemindersStatistics() {
+
+    }
+
     public int getWater() {
         return water;
     }
