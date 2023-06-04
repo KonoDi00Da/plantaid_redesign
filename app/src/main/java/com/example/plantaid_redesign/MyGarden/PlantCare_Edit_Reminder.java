@@ -398,7 +398,6 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         //set alarm
         //set type millisecond, intent
         alarmManager.cancel(alarmIntent);
-        toast("Reminder cancelled");
     }
 
     private void setNotification(){
@@ -510,6 +509,8 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
 
             }
         });
+        toast("Reminder cancelled");
+
     }
 
     private void toast(String message){
