@@ -62,7 +62,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
     public static final String TAG = "Reminder";
     private TextView editPlantName, editCalendarDate, editTime;
     private EditText editTask;
-    private Button btnRemoveReminder;
+    private Button btnRemoveReminder,btnFinishReminder;
     private FloatingActionButton btnBack, btnAdd;
 
     private FirebaseAuth mAuth;
@@ -105,6 +105,8 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         editCalendarDate = findViewById(R.id.editCalendarDate);
         editTime = findViewById(R.id.editTime);
         btnRemoveReminder = findViewById(R.id.btnRemoveReminder);
+        btnFinishReminder = findViewById(R.id.btnFinishReminder);
+        BounceView.addAnimTo(btnFinishReminder);
         BounceView.addAnimTo(btnRemoveReminder);
         btnBack = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnAdd);
@@ -112,6 +114,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         try {
             getSetIntents();
             removeReminder();
+            finishReminder();
             selectDate();
             selectTime();
             setUserTask();
@@ -204,6 +207,16 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
             }
         });
     }
+
+    private void finishReminder(){
+        btnFinishReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCompletedDialog();
+            }
+        });
+    }
+
     private void addToFirebase() {
         DatabaseReference userRef = database.getReference().child("PlantReminders").child(currentUser.getUid());
         PlantReminderModel plantReminderModel = new PlantReminderModel(plant_name,newReminder,
@@ -252,6 +265,35 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         BounceView.addAnimTo(dialog);
         dialog.show();
     }
+
+    private void showCompletedDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.cardview_complete_reminder);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnYes = dialog.findViewById(R.id.btnYes);
+        Button btnNo = dialog.findViewById(R.id.btnNo);
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //addcodesa firebase
+                dialog.dismiss();
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        BounceView.addAnimTo(dialog);
+        dialog.show();
+    }
+
     private void materialDateRangePicker(){
         MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds())).build();
         materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
