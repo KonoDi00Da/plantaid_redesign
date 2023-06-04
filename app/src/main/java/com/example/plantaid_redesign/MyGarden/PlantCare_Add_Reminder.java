@@ -46,10 +46,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -79,6 +82,12 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
     int requestCode, notificationID, currentHour,currentMinutes;
     String eventNameTxt;
     private LocalTime time;
+
+    private LocalDate startLocalDate, endLocalDate;
+
+    private List<LocalDate> selectedRangeDates;
+
+    private Long startDate, endDate;
 
     private String timeFormat,commonName, userKey, task, date, dateFormatted,custommTask;
 
@@ -129,6 +138,8 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
 
         txtComPlantName.setText(commonName);
 
+
+
         clockFormat = TimeFormat.CLOCK_12H;
 
         if(userTask.equals("Custom")){
@@ -145,8 +156,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                         edittxtCustomTask.requestFocus();
                         return;
                     }
-                    addToFirebase();
-                    setNotification();
+                    multipleAddDates();
                     Intent intent = new Intent(PlantCare_Add_Reminder.this, UserMyGardenPlantsActivity.class);
                     //intent.putExtra("plant_image", model.getImage());
                     intent.putExtra("commonName", commonName);
@@ -167,8 +177,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addToFirebase();
-                    setNotification();
+                    multipleAddDates();
                     Intent intent = new Intent(PlantCare_Add_Reminder.this, UserMyGardenPlantsActivity.class);
                     //intent.putExtra("plant_image", model.getImage());
                     intent.putExtra("commonName", commonName);
@@ -234,6 +243,17 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         dialog.show();
     }
 
+    private void multipleAddDates(){
+        if(selectedRangeDates != null){
+            setNotificationsForDateRange();
+            toast("Reminder is now set");
+        } else {
+            addToFirebase();
+            setNotification();
+            toast("Reminder is now set");
+        }
+    }
+
     private void addToFirebase() {
         try{
             String pushKey = userRef.push().getKey();
@@ -250,7 +270,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
             userRef.child(pushKey).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    toast("Reminder is now set");
+                    setNotification();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -271,6 +291,23 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
+                Pair<Long, Long> selectedDates = (Pair<Long, Long>) selection;
+                startDate = selectedDates.first;
+                endDate = selectedDates.second;
+
+                Instant instantStartDate = Instant.ofEpochMilli(startDate);
+                startLocalDate = instantStartDate.atZone(ZoneId.systemDefault()).toLocalDate();
+
+                Instant instantEndDate = Instant.ofEpochMilli(endDate);
+                endLocalDate = instantEndDate.atZone(ZoneId.systemDefault()).toLocalDate();
+
+                selectedRangeDates = new ArrayList<>();
+
+                while(!startLocalDate.isAfter(endLocalDate)){
+                    selectedRangeDates.add(startLocalDate);
+                    startLocalDate = startLocalDate.plusDays(1);
+                }
+
                 txtCalendarDate.setText(materialDatePicker.getHeaderText());
             }
         });
@@ -389,6 +426,73 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, startTime.getTimeInMillis(), pendingIntent);
         toast("Notification set");
     }
+
+    private void setNotificationsForDateRange() {
+        if (hour == 0 && minute == 0) {
+            hour = time.getHour();
+            minute = time.getMinute();
+        }
+
+
+
+        // Create a calendar instance for the notification time (hour and minute)
+        Calendar notificationTime = Calendar.getInstance();
+        notificationTime.set(Calendar.HOUR_OF_DAY, hour);
+        notificationTime.set(Calendar.MINUTE, minute);
+        notificationTime.set(Calendar.SECOND, 0);
+
+        for (LocalDate date : selectedRangeDates) {
+            selectedDate = date;
+            // Convert LocalDate to Instant
+            Instant instant = selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+            // Create a Calendar instance and set its time using the Instant
+            Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(Date.from(instant));
+
+            //add to firebase
+            addToFirebase();
+
+            // Set the notification text and other data
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            intent.putExtra("requestCode", requestCode);
+            intent.putExtra("plantName", commonName);
+            intent.putExtra("notificationID", notificationID);
+            intent.putExtra("title", "PlantAid Reminder");
+            intent.putExtra("customTask", customTask);
+            intent.putExtra("task", task);
+            intent.putExtra("delete", "null");
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    PlantCare_Add_Reminder.this,
+                    requestCode,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            // Set the notification time for each day within the date range
+            Calendar notificationDateTime = Calendar.getInstance();
+            notificationDateTime.set(Calendar.YEAR, startCalendar.get(Calendar.YEAR));
+            notificationDateTime.set(Calendar.MONTH, startCalendar.get(Calendar.MONTH));
+            notificationDateTime.set(Calendar.DAY_OF_MONTH, startCalendar.get(Calendar.DAY_OF_MONTH));
+
+            notificationDateTime.set(Calendar.HOUR_OF_DAY, notificationTime.get(Calendar.HOUR_OF_DAY));
+            notificationDateTime.set(Calendar.MINUTE, notificationTime.get(Calendar.MINUTE));
+            notificationDateTime.set(Calendar.SECOND, 0);
+
+            // Set the alarm for each day within the date range
+            alarmManager.set(AlarmManager.RTC_WAKEUP, notificationDateTime.getTimeInMillis(), pendingIntent);
+
+            Random random = new Random();
+            requestCode = random.nextInt(9999 - 1000 + 1) + 1000;
+            notificationID = random.nextInt(9999 - 1000 + 1) + 1000;
+        }
+
+        toast("Notifications set for the date range");
+    }
+
+
 
     private void toast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
