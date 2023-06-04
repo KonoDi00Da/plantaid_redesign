@@ -250,7 +250,7 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
         DatabaseReference userRef = database.getReference().child("PlantStatistics").child(currentUser.getUid());
         PlantRemindersStatistics plantReminderModel = new PlantRemindersStatistics(water, repot, fertilize, custom);
 
-        userRef.child(reminder_key).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+        userRef.child(user_key).setValue(plantReminderModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 toast("Reminder has been edited");
