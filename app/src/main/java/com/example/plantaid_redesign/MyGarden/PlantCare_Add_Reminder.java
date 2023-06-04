@@ -1,11 +1,15 @@
 package com.example.plantaid_redesign.MyGarden;
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,10 +18,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.util.Pair;
 
 import com.example.plantaid_redesign.Model.PlantReminderModel;
 import com.example.plantaid_redesign.R;
 import com.example.plantaid_redesign.Utilities.AlarmReceiver;
+import com.github.hariprasanths.bounceview.BounceView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -56,7 +63,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
     public static final String TAG = "Reminder";
     private Calendar cal;
 
-    private TextView txtComPlantName, txtTask, txtCalendarDate, txtTime;
+    private TextView txtComPlantName, txtTask, txtCalendarDate, txtTime,txtDateRange;
     private EditText edittxtCustomTask;
     private FloatingActionButton btnBack, btnAdd;
     private Button btnOK, btnCancel;
@@ -103,6 +110,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         txtComPlantName = findViewById(R.id.txtComPlantName);
         txtTask = findViewById(R.id.txtTask);
         txtCalendarDate = findViewById(R.id.txtCalendarDate);
+        txtDateRange = findViewById(R.id.txtDateRange);
         txtTime = findViewById(R.id.txtTime);
         edittxtCustomTask = findViewById(R.id.txtCustomTask);
         btnBack = findViewById(R.id.btnBack);
@@ -113,19 +121,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
 
         txtCalendarDate.setText(formattedDate(selectedDate));
 
-        //currentHour = cal.get(Calendar.HOUR);
-        //hour = currentMinutes;
-        //currentMinutes = cal.get(Calendar.MINUTE);
-        //minute = currentMinutes;
-
-        //Calendar calendar = Calendar.getInstance();
-        //SimpleDateFormat time = new SimpleDateFormat("h:mm a");
-        //SimpleDateFormat time_ = new SimpleDateFormat("h:mm_a");
-
-        //String currentTime = time.format(calendar.getTime());
-        //String currentTime_ = time_.format(calendar.getTime());
         txtTime.setText(formattedTime(time));
-        //timeFormat = currentTime_;
 
         String userTask = getIntent().getStringExtra("taskReminder");
         commonName = getIntent().getStringExtra("plantCommonName");
@@ -196,7 +192,7 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
         txtCalendarDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                materialDatePicker();
+                showDialog();
             }
         });
 
@@ -206,6 +202,36 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
                 setTime();
             }
         });
+
+    }
+
+    private void showDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.cardview_date_picker);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnRange = dialog.findViewById(R.id.btnRange);
+        Button btnSingle = dialog.findViewById(R.id.btnSingle);
+
+        btnRange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDateRangePicker();
+                dialog.dismiss();
+            }
+        });
+
+        btnSingle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDatePicker();
+                dialog.dismiss();
+            }
+        });
+        BounceView.addAnimTo(dialog);
+        dialog.show();
     }
 
     private void addToFirebase() {
@@ -237,6 +263,17 @@ public class PlantCare_Add_Reminder extends AppCompatActivity {
             toast("Something went wrong, please try again");
             Log.e("SaveReminder", "exception", e);
         }
+    }
+
+    private void materialDateRangePicker(){
+        MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds())).build();
+        materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                txtCalendarDate.setText(materialDatePicker.getHeaderText());
+            }
+        });
     }
 
 

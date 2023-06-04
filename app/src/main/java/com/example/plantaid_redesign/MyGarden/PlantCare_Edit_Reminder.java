@@ -3,6 +3,7 @@ package com.example.plantaid_redesign.MyGarden;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -221,13 +222,52 @@ public class PlantCare_Edit_Reminder extends AppCompatActivity {
             }
         });
 
-
     }
+
+    private void showDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.cardview_date_picker);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnRange = dialog.findViewById(R.id.btnRange);
+        Button btnSingle = dialog.findViewById(R.id.btnSingle);
+
+        btnRange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDateRangePicker();
+                dialog.dismiss();
+            }
+        });
+
+        btnSingle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDatePicker();
+                dialog.dismiss();
+            }
+        });
+        BounceView.addAnimTo(dialog);
+        dialog.show();
+    }
+    private void materialDateRangePicker(){
+        MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds())).build();
+        materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                editCalendarDate.setText(materialDatePicker.getHeaderText());
+            }
+        });
+    }
+
     private void selectDate() {
         editCalendarDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                materialDatePicker();
+                showDialog();
             }
         });
     }
